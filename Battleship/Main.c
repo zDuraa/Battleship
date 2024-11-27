@@ -4,7 +4,16 @@
 
 void vPrintBoard(int iaBoard[][BOARDLENGTH]);
 
+
+//struct sShip {
+//    int size;
+//};
+//typedef struct sShip t_TypeOfShip;
+
 int main() {
+
+    /*t_TypeOfShip shipOfSizeTwo[2] = { 1,2 };*/
+
     int iaPlayerA[BOARDLENGTH][BOARDLENGTH] = {
         {0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0},
