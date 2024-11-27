@@ -3,8 +3,6 @@
 #define BOARDLENGTH 10
 #define TOTALSHIPS 10
 
-
-
 struct sShip {
     int length;   
     int data[4][1]; 
@@ -14,6 +12,7 @@ typedef struct sShip t_Ship;
 void vPrintBoard(int iaBoard[][BOARDLENGTH]);
 void vFillFleet(t_Ship fleet[]);
 void vSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
+
 int main() {
     t_Ship fleet[TOTALSHIPS];
     vFillFleet(fleet);
