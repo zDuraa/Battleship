@@ -14,12 +14,20 @@
 //-------------------------------------------------------------------
 // Declaration structs, unions, enums, bitfields, typedefs                      
 //-------------------------------------------------------------------
-struct sShip {
+typedef struct sShip {
     int length;
     int data[4][1];
-};
+} t_Ship;
 
-typedef struct sShip t_Ship;
+typedef struct coordinate {
+	int        row;
+	int        column;
+} Coordinate;
+
+typedef struct cell {
+	char       symbol;
+	Coordinate position;
+} Cell;
 //-------------------------------------------------------------------
 // externals                                                      
 //-------------------------------------------------------------------
@@ -33,6 +41,7 @@ extern volatile enum StateMeasurement eStateCurrentMeasurement;
 //-------------------------------------------------------------------
 // Declaration functions                                           
 //-------------------------------------------------------------------
-void vPrintBoard(int iaBoard[][BOARDLENGTH]);
+void vPrintBoard(char iaBoard[][BOARDLENGTH]);
 void vFillFleet(t_Ship fleet[]);
 void vSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
+void vIntroduction(void);

@@ -1,6 +1,27 @@
 #include "battleship.h"
 
-
+void vIntroduction() 
+{
+    printf("=======================================================\n");
+    printf("X       X  XXXXX  X        XXXX    XXX   X     X  XXXXX  \n");
+    printf("X       X  X      X       X       X   X  XX   XX  X   \n");
+    printf("X   X   X  XXXXX  X       X       X   X  X X X X  XXXXX \n");
+    printf(" X X X X   X      X       X       X   X  X  X  X  X  \n");
+    printf("  X   X    XXXXX  XXXXX    XXXX    XXX   X     X  XXXXX\n");
+    printf("=======================================================\n");
+    printf("\n\n");
+    printf("||R U L E S||\n");
+    printf("1. This is a two player game.\n");
+    printf("2. Player 1 has to manually input coordinates\n");
+    printf("   for the game board\n");
+    printf("3. There are four types of ships to be placed by longest length to the\n");
+    printf("   shortest; [b] Battleship has 4 cells, [r] Cruiser has 3 cells, \n");
+    printf("   [s] Submarine has 2 cells, [d] Destroyer has 1 cell\n");
+    printf("4. Afterwards, Player 2 does his input\n");
+    printf("5. Player 1 goes first\n");
+    printf("6. The game begins as each player tries to sink the ships of the oponent\n");
+    printf("7. First player to destroy all ships wins\n\n");
+}
 //prints board
 void vPrintBoard(int iaBoard[][BOARDLENGTH]) {
     char caLetters[BOARDLENGTH] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };

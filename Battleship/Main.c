@@ -2,6 +2,8 @@
 #include "battleship.h"
 
 int main() {
+    vIntroduction();
+
     t_Ship fleet[TOTALSHIPS];
     vFillFleet(fleet);
     int iaPlayerABoard[BOARDLENGTH][BOARDLENGTH] = {
