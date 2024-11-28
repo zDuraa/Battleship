@@ -41,7 +41,7 @@ extern volatile enum StateMeasurement eStateCurrentMeasurement;
 //-------------------------------------------------------------------
 // Declaration functions                                           
 //-------------------------------------------------------------------
-void vPrintBoard(char iaBoard[][BOARDLENGTH]);
+void vPrintBoard(int iaBoard[][BOARDLENGTH]);
 void vFillFleet(t_Ship fleet[]);
 void vSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 void vIntroduction(void);
