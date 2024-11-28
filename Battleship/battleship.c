@@ -15,7 +15,7 @@ void vIntroduction()
     printf("2. Player 1 has to manually input coordinates\n");
     printf("   for the game board\n");
     printf("3. There are four types of ships to be placed by longest length to the\n");
-    printf("   shortest; [b] Battleship has 4 cells, [r] Cruiser has 3 cells, \n");
+    printf("   shortest; [b] Battleship has 4 cells, [c] Cruiser has 3 cells, \n");
     printf("   [s] Submarine has 2 cells, [d] Destroyer has 1 cell\n");
     printf("4. Afterwards, Player 2 does his input\n");
     printf("5. Player 1 goes first\n");
@@ -68,10 +68,6 @@ void vSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
 
 }
 
-//void vShootShip(int iX, int iY) 
-//{
-//
-//}
 
 void vFillFleet(t_Ship fleet[]) {
     int index = 0;
@@ -101,3 +97,24 @@ void vFillFleet(t_Ship fleet[]) {
 }
 
 
+
+//Enter Massage and only after pressing enter, it continous
+void systemMessage(char* message) {
+    char ch = '\0';
+
+    do {
+        printf("%s", message);
+    } while ((ch = _getch()) != '\r');
+}
+
+
+/*
+    Symbol Lexikon:
+    0 - ~ Wasser
+    1 - d Schiff der größe 1
+    2 - s Schiff der größe 1
+    3 - c Schiff der größe 1
+    4 - b Schiff der größe 1
+    5 - X Treffer
+    6 - M Daneben
+*/

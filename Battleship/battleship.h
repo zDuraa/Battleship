@@ -2,7 +2,10 @@
 /* Inhalt der Headerdatei battleship.h */
 #include "stdint.h"
 #include <stdio.h>
-
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <conio.h>
 //Lib and packages includes
 
 
@@ -33,11 +36,11 @@ typedef struct cell {
 //-------------------------------------------------------------------
 // Declaration system globals
 
-extern volatile uint8_t u8Clock_Is;
-extern volatile struct MyTime sSystemTime;
-extern volatile struct MyTime sCurrentMeasurementTime;
-extern volatile struct AllMeasurements sAllMeasurements;
-extern volatile enum StateMeasurement eStateCurrentMeasurement;
+//extern volatile uint8_t u8Clock_Is;
+//extern volatile struct MyTime sSystemTime;
+//extern volatile struct MyTime sCurrentMeasurementTime;
+//extern volatile struct AllMeasurements sAllMeasurements;
+//extern volatile enum StateMeasurement eStateCurrentMeasurement;
 //-------------------------------------------------------------------
 // Declaration functions                                           
 //-------------------------------------------------------------------
@@ -45,3 +48,4 @@ void vPrintBoard(int iaBoard[][BOARDLENGTH]);
 void vFillFleet(t_Ship fleet[]);
 void vSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 void vIntroduction(void);
+void systemMessage(char* message);
