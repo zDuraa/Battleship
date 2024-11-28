@@ -19,7 +19,7 @@ int main() {
         {0,0,0,0,0,0,0,0,0,0}
     };
 
-
+    //test
     vPrintBoard(iaPlayerABoard);
     vSetShip(fleet, iaPlayerABoard);
     vPrintBoard(iaPlayerABoard);
