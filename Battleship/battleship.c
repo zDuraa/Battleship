@@ -112,19 +112,19 @@ char vConvertSetup(int iCellValue) {
    switch (iCellValue) 
    {
       case 1:
-         return "d";
+         return 'd';
          break;
       case 2:
-         return "s";
+         return 's';
          break;
       case 3:
-         return "c";
+         return 'c';
          break;
       case 4:
-         return "b";
+         return 'b';
          break;
       default:
-         return "~";
+         return '~';
    }
 }
 
@@ -132,13 +132,13 @@ char vConvertPlay(int iCellValue) {
    switch (iCellValue)
    {
    case 4:
-      return "X";
+      return 'X';
       break;
    case 5:
-      return "M";
+      return 'M';
       break;
    default:
-      return "?";
+      return '?';
    }
 }
 
