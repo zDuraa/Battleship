@@ -24,6 +24,20 @@ void vIntroduction()
 }
 
 
+t_Board vCreateBoard(int iPlayerId) {
+        t_Board PlayerBoard;
+
+        // Initialisiere alle Werte im Array auf 0
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                PlayerBoard.iaBoard[i][j] = 0;
+            }
+        }
+
+        PlayerBoard.iPlayer = iPlayerId;
+
+        return PlayerBoard;
+    }
 
 
 //prints board

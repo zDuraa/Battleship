@@ -52,6 +52,7 @@ extern volatile short int siPlayer;	           // 0 -> player1, 1 -> player2
 // Declaration functions                                           
 //-------------------------------------------------------------------
 void vPrintBoard(int iaBoard[][BOARDLENGTH]);
+t_Board vCreateBoard(int iPlayerId);
 void vFillFleet(t_Ship fleet[]);
 void vSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 void vIntroduction(void);

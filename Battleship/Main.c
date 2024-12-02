@@ -7,34 +7,13 @@ int main() {
 
     t_Ship fleet[TOTALSHIPS];
     vFillFleet(fleet);
-    int iaPlayerABoard[BOARDLENGTH][BOARDLENGTH] = {
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0}
-    };
-    int iaPlayerBBoard[BOARDLENGTH][BOARDLENGTH] = {
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0}
-    };
+    t_Board PlayerA = vCreateBoard(0);
+    t_Board PlayerB = vCreateBoard(1);
+   
 
-    vPrintBoard(iaPlayerABoard);
-    vSetShip(fleet, iaPlayerABoard);
-    vPrintBoard(iaPlayerABoard);
+    vPrintBoard(PlayerA.iaBoard);
+    vSetShip(fleet, PlayerA.iaBoard);
+    vPrintBoard(PlayerA.iaBoard);
     return 0;
 }
 
