@@ -22,6 +22,11 @@ typedef struct sShip {
     int data[4][1];
 } t_Ship;
 
+typedef struct sBoard {
+    int iaBoard[BOARDLENGTH][BOARDLENGTH];
+    int iPlayer;
+} t_Board;
+
 typedef struct coordinate {
 	int        row;
 	int        column;
@@ -42,6 +47,7 @@ typedef struct cell {
 //extern volatile struct AllMeasurements sAllMeasurements;
 //extern volatile enum StateMeasurement eStateCurrentMeasurement;
 extern volatile short int siPlayer;	           // 0 -> player1, 1 -> player2 
+
 //-------------------------------------------------------------------
 // Declaration functions                                           
 //-------------------------------------------------------------------

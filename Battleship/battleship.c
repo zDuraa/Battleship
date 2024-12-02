@@ -22,6 +22,10 @@ void vIntroduction()
     printf("6. The game begins as each player tries to sink the ships of the oponent\n");
     printf("7. First player to destroy all ships wins\n\n");
 }
+
+
+
+
 //prints board
 void vPrintBoard(int iaBoard[][BOARDLENGTH]) {
     char caLetters[BOARDLENGTH] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
