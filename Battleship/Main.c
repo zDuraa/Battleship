@@ -1,8 +1,6 @@
-#include <stdio.h>
 #include "battleship.h"
 
 int main() {
-    short int siPlayer = 0;	           // 0 -> player1, 1 -> player2 
     vIntroduction();
     systemMessage("                            Hit <ENTER> to continue!\n");
     system("cls");
@@ -21,10 +19,35 @@ int main() {
         {0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0}
     };
+    int iaPlayerBBoard[BOARDLENGTH][BOARDLENGTH] = {
+        {0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0}
+    };
 
-    //temp
     vPrintBoard(iaPlayerABoard);
     vSetShip(fleet, iaPlayerABoard);
     vPrintBoard(iaPlayerABoard);
     return 0;
 }
+
+/*
+
+   - 2 Arrays, Player1/2
+   - char vConvertNumberToSymbol(int iCellValue)
+   - struct Board
+     {
+      int iaBoard[][] //Board des Spielers
+      int iPlayer; //Entscheiden um welchen Player es sich handelt
+     }
+   - Globale Variable, die zwischen Spieler 1 und 2 wechselt
+   - Neue Art des eingebens, Koordinate 1 eingeben (anfang), koordinate 2 eingeben (Ende) und automatisch füllen
+
+*/

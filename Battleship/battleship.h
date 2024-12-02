@@ -41,6 +41,7 @@ typedef struct cell {
 //extern volatile struct MyTime sCurrentMeasurementTime;
 //extern volatile struct AllMeasurements sAllMeasurements;
 //extern volatile enum StateMeasurement eStateCurrentMeasurement;
+extern volatile short int siPlayer;	           // 0 -> player1, 1 -> player2 
 //-------------------------------------------------------------------
 // Declaration functions                                           
 //-------------------------------------------------------------------
@@ -49,3 +50,5 @@ void vFillFleet(t_Ship fleet[]);
 void vSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 void vIntroduction(void);
 void systemMessage(char* message);
+char vConvertSetup(int iCellValue);
+char vConvertPlay(int iCellValue);

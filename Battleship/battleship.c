@@ -37,7 +37,7 @@ void vPrintBoard(int iaBoard[][BOARDLENGTH]) {
     for (int iX = 0; iX < BOARDLENGTH; iX++) {
         printf("%c ", caLetters[iX]);
         for (int iY = 0; iY < BOARDLENGTH; iY++) {
-            printf("%d ", iaBoard[iX][iY]);
+            printf("%c ", vConvertSetup(iaBoard[iX][iY]));
         }
         printf("\n");
     }
@@ -107,6 +107,40 @@ void systemMessage(char* message) {
     } while ((ch = _getch()) != '\r');
 }
 
+
+char vConvertSetup(int iCellValue) {
+   switch (iCellValue) 
+   {
+      case 1:
+         return "d";
+         break;
+      case 2:
+         return "s";
+         break;
+      case 3:
+         return "c";
+         break;
+      case 4:
+         return "b";
+         break;
+      default:
+         return "~";
+   }
+}
+
+char vConvertPlay(int iCellValue) {
+   switch (iCellValue)
+   {
+   case 4:
+      return "X";
+      break;
+   case 5:
+      return "M";
+      break;
+   default:
+      return "?";
+   }
+}
 
 /*
     Symbol Lexikon:
