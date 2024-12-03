@@ -249,7 +249,7 @@ void vSetShortShip(int iaBoard[][BOARDLENGTH])
        ((iY == 9) || (iaBoard[iX][iY + 1] == 0)) &&
        ((iY == 0) || (iaBoard[iX][iY - 1] == 0)))
     {
-        iaBoard[iX][iY] = 1;
+        iaBoard[iY][iX] = 1;
         iErr = 0;
     }
     else {
