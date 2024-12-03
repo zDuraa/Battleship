@@ -243,7 +243,11 @@ void vSetShortShip(int iaBoard[][BOARDLENGTH])
     iX = iGetX("X Coordinate: ");
     iY = iGetY("Y Coordinate: ");
 
-    if (iaBoard[iX][iY] == 0)
+    if ((iaBoard[iX][iY] == 0) && 
+       ((iX == 9) || (iaBoard[iX + 1][iY] == 0)) && 
+       ((iX == 0) || (iaBoard[iX - 1][iY] == 0)) &&
+       ((iY == 9) || (iaBoard[iX][iY + 1] == 0)) &&
+       ((iY == 0) || (iaBoard[iX][iY - 1] == 0)))
     {
         iaBoard[iX][iY] = 1;
         iErr = 0;
@@ -253,7 +257,7 @@ void vSetShortShip(int iaBoard[][BOARDLENGTH])
         printf("Please try again");
     }
 
-    } while (iErr == 0);
+    } while (iErr == -1);
     
     
 }
