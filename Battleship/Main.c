@@ -12,7 +12,7 @@ int main() {
    
 
     vPrintBoard(PlayerA.iaBoard);
-    vSetShip(fleet, PlayerA.iaBoard);
+    vSetFleet(fleet, PlayerA.iaBoard);
     vPrintBoard(PlayerA.iaBoard);
     return 0;
 }
