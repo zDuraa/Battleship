@@ -39,7 +39,6 @@ t_Board vCreateBoard(int iPlayerId) {
         return PlayerBoard;
     }
 
-
 //prints board
 void vPrintBoard(int iaBoard[][BOARDLENGTH]) {
     char caLetters[BOARDLENGTH] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
@@ -63,9 +62,7 @@ void vPrintBoard(int iaBoard[][BOARDLENGTH]) {
 
 //Puts Ship on Board
 void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
-{
-    
-    
+{  
     printf("Enter coordinates to place a ship on the board\n");
     for (int i = 0; i < TOTALSHIPS; i++)
     {
@@ -82,155 +79,58 @@ void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
             vSetShortShip(iaBoard);
             system("cls");
             vPrintBoard(iaBoard);
-        }
-
-        //for (int row = 0; row < fleet[i].length; row++) 
-
-
-        
+        }       
     }
-
 }
 
-void vSetLongShip(int iaBoard[][BOARDLENGTH], int iShipSize)
-{
-    int iXfirst = 0;
-    int iYfirst = 0;
-    int iXlast = 0;
-    int iYlast = 0;
+void vSetLongShip(int iaBoard[][BOARDLENGTH], int iShipSize) {
+   int iXfirst, iYfirst, iXlast, iYlast, iErr;
 
-    int iErr = 0;
-    
-    do {
-    printf("Please enter the first Ship coordinate\n");
+   do {
+      printf("Please enter the first Ship coordinate\n");
+      iXfirst = iGetX("X Coordinate: ");
+      iYfirst = iGetY("Y Coordinate: ");
 
-    iXfirst = iGetX("X Coordinate: ");
-    
-    iYfirst = iGetY("Y Coordinate: ");
-    
+      printf("Please enter the last Ship coordinate\n");
+      iXlast = iGetX("X Coordinate: ");
+      iYlast = iGetY("Y Coordinate: ");
 
-    printf("Please enter the last Ship coordinate\n");
+      iErr = 0;
 
-    iXlast = iGetX("X Coordinate: ");
-    
-    iYlast = iGetY("Y Coordinate: ");
-    
+      // Überprüfe ob die Koordinaten horizontal oder vertikal ausgerichtet sind
+      if ((iYfirst == iYlast) || (iXfirst == iXlast)) {
+         // Tausche Werte, falls notwendig
+         if (iYfirst == iYlast && iXfirst > iXlast) {
+            vSwap(&iXfirst, &iXlast);
+         }
+         else if (iXfirst == iXlast && iYfirst > iYlast) {
+            vSwap(&iYfirst, &iYlast);
+         }
 
-    iErr = 0;
-
-    if ((iYfirst == iYlast) || (iXfirst == iXlast))
-    {
-        if ((iYfirst == iYlast) && (iXfirst != iXlast))
-        {
-            if (iXfirst > iXlast)
-            {
-                int iSwap = iXfirst;
-                iXfirst = iXlast;
-                iXlast = iSwap;
-            }
-            if ((iXlast - iXfirst) == (iShipSize - 1))
-            {
-                if (!(((iXfirst == 0) || (iaBoard[iYfirst][iXfirst - 1] == 0)) &&
-                    ((iXlast == 9) || (iaBoard[iYfirst][iXfirst + 1] == 0))))
-                {
-                    iErr = -1;
-                    printf("This Space is already full please try againX1\n");
-                }
-                else {
-                    int iCount = 0;
-                    for (int i = 0; i < iShipSize; i++)
-                    {
-                        if (!(((iYfirst == 9) || (iaBoard[iYfirst + 1][iXfirst + i] == 0)) &&
-                            ((iYfirst == 0) || (iaBoard[iYfirst - 1][iXfirst + i] == 0)) &&
-                            (iaBoard[iYfirst][iXfirst + i] == 0)))
-                        {
-                            iErr = -1;
-                            printf("This Space is already full please try againX2\n");
-                        }
-                        else
-                        {
-                            iCount++;
-                            if (iCount == iShipSize)
-                            {
-                                for (int j = 0; j < iShipSize; j++)
-                                {
-                                    iaBoard[iYfirst][iXfirst + j] = iShipSize;
-                                }
-                            }
-                        }
-                    }
-                }
-                
+         // Überprüfe die Schiffgröße
+         if (iCheckShipSize(iXfirst, iYfirst, iXlast, iYlast, iShipSize)) {
+            // Überprüfe ob Platz frei ist
+            if (iCheckFreeSpace(iaBoard, iXfirst, iYfirst, iXlast, iYlast, iShipSize)) {
+               // Platziere das Schiff
+               vPlaceShip(iaBoard, iXfirst, iYfirst, iXlast, iYlast, iShipSize);
             }
             else {
-                iErr = -1;
-                printf("Ship was the wrong size please try againX1\n");
+               iErr = -1;
+               printf("This space is already occupied. Try again.\n");
             }
-        }
-        else{
-            if ((iXfirst == iXlast) && (iYfirst != iYlast))
-            {
-                if (iYfirst > iYlast)
-                {
-                    int iSwap = iYfirst;
-                    iYfirst = iYlast;
-                    iYlast = iSwap;
-                }
-
-                if ((iYlast - iYfirst) == (iShipSize - 1))
-                {
-                    if (!(((iYfirst == 0) || (iaBoard[iYfirst - 1][iXfirst] == 0)) &&
-                        ((iYlast == 9) || (iaBoard[iYfirst + 1][iXfirst] == 0))))
-                    {
-                        iErr = -1;
-                        printf("This Space is already full please try againX3\n");
-                    }
-                    else {
-                        int iCount = 0;
-                        for (int i = 0; i < iShipSize; i++)
-                        {
-                            if (!(((iXfirst == 9) || (iaBoard[iYfirst + i][iXfirst + 1] == 0)) &&
-                                ((iXfirst == 0) || (iaBoard[iYfirst + i][iXfirst - 1] == 0)) &&
-                                (iaBoard[iYfirst + i][iXfirst] == 0)))
-                            {
-                                iErr = -1;
-                                printf("This Space is already full please try againY3\n");
-                            }
-                            else
-                            {
-                                iCount++;
-                                if (iCount == iShipSize)
-                                {
-                                    for (int j = 0; j < iShipSize; j++)
-                                    {
-                                        iaBoard[iYfirst + j][iXfirst] = iShipSize;
-                                    }
-                                }
-                                
-                            }
-                        }
-                    }
-                    
-                }
-                else {
-                    iErr = -1;
-                    printf("Ship was the wrong size please try againY2\n");
-                }
-            }
-            else {
-                iErr = -1;
-                printf("Ship was the wrong size please try againY1\n");
-            }
-        }
-    }
-    else {
-        iErr = -1;
-        printf("Ship was Diagonal please try again\n");
-    }
-   
-    } while (iErr == -1);
-    
+         }
+         else {
+            iErr = -1;
+            printf("Ship size is incorrect. Try again.\n");
+         }
+      }
+      else {
+         iErr = -1;
+         printf("Ships must be placed horizontally or vertically. Try again.\n");
+      }
+   } while (iErr == -1);
 }
+
 
 void vSetShortShip(int iaBoard[][BOARDLENGTH])
 {
@@ -382,7 +282,6 @@ int iGetY(char* message)
     return iY;
 }
 
-
 void vFillFleet(t_Ship fleet[]) {
     int index = 0;
 
@@ -410,8 +309,6 @@ void vFillFleet(t_Ship fleet[]) {
     }
 }
 
-
-
 //Enter Massage and only after pressing enter, it continous
 void systemMessage(char* message) {
     char ch = '\0';
@@ -420,7 +317,6 @@ void systemMessage(char* message) {
         printf("%s", message);
     } while ((ch = _getch()) != '\r');
 }
-
 
 char vConvertSetup(int iCellValue) {
    switch (iCellValue) 
@@ -459,6 +355,60 @@ char vConvertPlay(int iCellValue) {
    }
 }
 
+void vSwap(int* iFirst, int* iLast) {
+   int temp = *iFirst;
+   *iFirst = *iLast;
+   *iLast = temp;
+}
+
+int iCheckShipSize(int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize) {
+   return (iYfirst == iYlast && iXlast - iXfirst + 1 == iShipSize) ||
+      (iXfirst == iXlast && iYlast - iYfirst + 1 == iShipSize);
+}
+
+int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize) {
+   int x = 0;
+   int y = 0;
+   for (int i = 0; i < iShipSize; i++) {
+      if (iYfirst == iYlast) {
+         // Horizontales Schiff
+         x = iXfirst + i;
+         y = iYfirst;
+      }
+      else if (iXfirst == iXlast) {
+         // Vertikales Schiff
+         x = iXfirst;
+         y = iYfirst + i;
+      }
+
+      if (iaBoard[y][x] != 0 ||
+         (y > 0 && iaBoard[y - 1][x] != 0) ||
+         (y < BOARDLENGTH - 1 && iaBoard[y + 1][x] != 0) ||
+         (x > 0 && iaBoard[y][x - 1] != 0) ||
+         (x < BOARDLENGTH - 1 && iaBoard[y][x + 1] != 0)) {
+         return 0; // Platz ist blockiert
+      }
+   }
+   return 1; // Platz ist frei
+}
+
+void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize) {
+   int x = 0;
+   int y = 0;
+   for (int i = 0; i < iShipSize; i++) {
+      if (iYfirst == iYlast) {
+         // Horizontales Schiff
+         x = iXfirst + i;
+         y = iYfirst;
+      }
+      else if (iXfirst == iXlast) {
+         // Vertikales Schiff
+         x = iXfirst;
+         y = iYfirst + i;
+      }
+      iaBoard[y][x] = iShipSize;
+   }
+}
 /*
     Symbol Lexikon:
     0 - ~ Wasser

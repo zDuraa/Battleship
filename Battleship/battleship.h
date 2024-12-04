@@ -41,11 +41,6 @@ typedef struct cell {
 //-------------------------------------------------------------------
 // Declaration system globals
 
-//extern volatile uint8_t u8Clock_Is;
-//extern volatile struct MyTime sSystemTime;
-//extern volatile struct MyTime sCurrentMeasurementTime;
-//extern volatile struct AllMeasurements sAllMeasurements;
-//extern volatile enum StateMeasurement eStateCurrentMeasurement;
 extern volatile short int siPlayer;	           // 0 -> player1, 1 -> player2 
 
 //-------------------------------------------------------------------
@@ -63,3 +58,7 @@ void vSetLongShip(int iaBoard[][BOARDLENGTH], int iShipSize);
 void vSetShortShip(int iaBoard[][BOARDLENGTH]);
 int iGetX(char* message);
 int iGetY(char* message);
+void vSwap(int* iFirst, int* iLast);
+int iCheckShipSize(int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
+int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
+void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
