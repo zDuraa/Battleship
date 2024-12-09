@@ -70,20 +70,20 @@ void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
         if (fleet[i].length > 1)
         {
             
-            vSetLongShip(iaBoard, fleet[i].length);
+            vSetLongShip(iaBoard, fleet, i);
             system("cls");
             vPrintBoard(iaBoard);
         }
         else {
             
-            vSetShortShip(iaBoard);
+            vSetShortShip(iaBoard, fleet, i);
             system("cls");
             vPrintBoard(iaBoard);
         }       
     }
 }
 
-void vSetLongShip(int iaBoard[][BOARDLENGTH], int iShipSize) {
+void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[],int index) {
    int iXfirst, iYfirst, iXlast, iYlast, iErr;
 
    do {
@@ -108,11 +108,11 @@ void vSetLongShip(int iaBoard[][BOARDLENGTH], int iShipSize) {
          }
 
          // Überprüfe die Schiffgröße
-         if (iCheckShipSize(iXfirst, iYfirst, iXlast, iYlast, iShipSize)) {
+         if (iCheckShipSize(iXfirst, iYfirst, iXlast, iYlast, fleet[index].length)) {
             // Überprüfe ob Platz frei ist
-            if (iCheckFreeSpace(iaBoard, iXfirst, iYfirst, iXlast, iYlast, iShipSize)) {
+            if (iCheckFreeSpace(iaBoard, iXfirst, iYfirst, iXlast, iYlast, fleet[index].length)) {
                // Platziere das Schiff
-               vPlaceShip(iaBoard, iXfirst, iYfirst, iXlast, iYlast, iShipSize);
+               vPlaceShip(iaBoard, iXfirst, iYfirst, iXlast, iYlast, fleet, index);
             }
             else {
                iErr = -1;
@@ -132,7 +132,7 @@ void vSetLongShip(int iaBoard[][BOARDLENGTH], int iShipSize) {
 }
 
 
-void vSetShortShip(int iaBoard[][BOARDLENGTH])
+void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index)
 {
     int iX = 0;
     int iY = 0;
@@ -150,6 +150,11 @@ void vSetShortShip(int iaBoard[][BOARDLENGTH])
        ((iY == 0) || (iaBoard[iX][iY - 1] == 0)))
     {
         iaBoard[iY][iX] = 1;
+        fleet[index].data[0].column = iX;
+        fleet[index].data[0].row = iY;
+        fleet[index].data[0].hitpoint = 1;
+        fleet[index].shipId = index;
+
         iErr = 0;
     }
     else {
@@ -288,28 +293,32 @@ void vFillFleet(t_Ship fleet[]) {
     // • 1 Schiff der Länge 4
 
     fleet[index].length = 4;
+    fleet[index].shipId = index;
     index++;
 
     // • 2 Schiffe der Länge 3
     for (int i = 0; i < 2; i++) {
         fleet[index].length = 3;
+        fleet[index].shipId = index;
         index++;
     }
 
     // • 3 Schiffe der Länge 2
     for (int i = 0; i < 3; i++) {
         fleet[index].length = 2;
+        fleet[index].shipId = index;
         index++;
     }
 
     // • 4 Schiffe der Länge 1
     for (int i = 0; i < 4; i++) {
         fleet[index].length = 1;
+        fleet[index].shipId = index;
         index++;
     }
 }
 
-//Enter Massage and only after pressing enter, it continous
+//Enter Message and only after pressing enter, it continous
 void systemMessage(char* message) {
     char ch = '\0';
 
@@ -392,10 +401,11 @@ int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iX
    return 1; // Platz ist frei
 }
 
-void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize) {
+void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, t_Ship fleet[], int index) {
    int x = 0;
    int y = 0;
-   for (int i = 0; i < iShipSize; i++) {
+   fleet[index].shipId = index;
+   for (int i = 0; i < fleet[index].length; i++) {
       if (iYfirst == iYlast) {
          // Horizontales Schiff
          x = iXfirst + i;
@@ -406,7 +416,10 @@ void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast
          x = iXfirst;
          y = iYfirst + i;
       }
-      iaBoard[y][x] = iShipSize;
+      fleet[index].data[i].column = x;
+      fleet[index].data[i].row = y;
+      fleet[index].data[i].hitpoint = 1;
+      iaBoard[y][x] = fleet[index].length;
    }
 }
 /*
