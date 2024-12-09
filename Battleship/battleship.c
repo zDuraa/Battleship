@@ -70,8 +70,8 @@ void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
         if (fleet[i].length > 1)
         {
             
-            vSetLongShip(iaBoard, fleet[i].length);
-            system("cls");
+            vSetLongShip(iaBoard, fleet[i].length, fleet);
+           // system("cls");
             vPrintBoard(iaBoard);
         }
         else {
@@ -83,10 +83,12 @@ void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
     }
 }
 
-void vSetLongShip(int iaBoard[][BOARDLENGTH], int iShipSize) {
+void vSetLongShip(int iaBoard[][BOARDLENGTH], int iShipSize, t_Ship fleet[]) {
    int iXfirst, iYfirst, iXlast, iYlast, iErr;
+   int iCurrentShip = 0;
 
-   do {
+   do 
+   {
       printf("Please enter the first Ship coordinate\n");
       iXfirst = iGetX("X Coordinate: ");
       iYfirst = iGetY("Y Coordinate: ");
@@ -112,7 +114,7 @@ void vSetLongShip(int iaBoard[][BOARDLENGTH], int iShipSize) {
             // Überprüfe ob Platz frei ist
             if (iCheckFreeSpace(iaBoard, iXfirst, iYfirst, iXlast, iYlast, iShipSize)) {
                // Platziere das Schiff
-               vPlaceShip(iaBoard, iXfirst, iYfirst, iXlast, iYlast, iShipSize);
+               vPlaceShip(iaBoard, iXfirst, iYfirst, iXlast, iYlast, iShipSize, fleet, iCurrentShip);
             }
             else {
                iErr = -1;
@@ -128,6 +130,7 @@ void vSetLongShip(int iaBoard[][BOARDLENGTH], int iShipSize) {
          iErr = -1;
          printf("Ships must be placed horizontally or vertically. Try again.\n");
       }
+      iCurrentShip++;
    } while (iErr == -1);
 }
 
@@ -392,7 +395,7 @@ int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iX
    return 1; // Platz ist frei
 }
 
-void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize) {
+void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize, t_Ship fleet[], int iCurrentShip) {
    int x = 0;
    int y = 0;
    for (int i = 0; i < iShipSize; i++) {
@@ -400,6 +403,7 @@ void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast
          // Horizontales Schiff
          x = iXfirst + i;
          y = iYfirst;
+         
       }
       else if (iXfirst == iXlast) {
          // Vertikales Schiff
@@ -407,7 +411,36 @@ void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast
          y = iYfirst + i;
       }
       iaBoard[y][x] = iShipSize;
+      fleet[iCurrentShip].iaCoordinates[i][0] = x;
+      fleet[iCurrentShip].iaCoordinates[i][1] = y;
+
+      
+
    }
+}
+
+int checkShot(int iX, int iY, t_Ship fleet[], int iCurrentShip)
+{
+   for (int i = 0; i < fleet[iCurrentShip].length; i++) {
+      if (fleet[iCurrentShip].iaCoordinates[i][0] == iX && fleet[iCurrentShip].iaCoordinates[i][1] == iY) {
+         if (fleet[iCurrentShip].iaHits[i] == 0) {
+            fleet[iCurrentShip].iaHits[i] = 1;
+            return 1;
+         }
+      }
+   }
+   return 0; // Kein Treffer
+}
+
+int checkSunkShip(t_Ship fleet[], int iCurrentShip)
+{
+   for (int i = 0; i < fleet[iCurrentShip].length; i++) {
+      if (fleet[iCurrentShip].iaHits == 0) {
+         return 0;  // Noch nicht alle Positionen getroffen
+      }
+   }
+   fleet[1].iSunk = 1; // Markiere das Schiff als versenkt
+   return 1;
 }
 /*
     Symbol Lexikon:
