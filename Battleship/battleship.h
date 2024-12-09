@@ -78,3 +78,4 @@ int checkSunkShip(t_Ship fleet[], int iCurrentShip);
 int checkShot(int iX, int iY, t_Ship fleet[], int iCurrentShip);
 
 void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, t_Ship fleet[], int index);
+void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);

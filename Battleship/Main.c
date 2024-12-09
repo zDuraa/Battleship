@@ -15,6 +15,15 @@ int main() {
     vPrintBoard(PlayerA.iaBoard);
     vSetFleet(PlayerA.fleet, PlayerA.iaBoard);
     vPrintBoard(PlayerA.iaBoard);
+
+    //------------ Test Bereich -----------
+    vDebugSetShip(PlayerB.fleet, PlayerB.iaBoard);
+
+    system("cls");
+    vPrintBoard(PlayerB.iaBoard);
+    printf("///////////////////////////////////////////\n");
+    vPrintBoard(PlayerA.iaBoard);
+    //------------ Test Bereich -----------
     return 0;
 }
 

@@ -142,11 +142,11 @@ void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index)
       iX = iGetX("X Coordinate: ");
       iY = iGetY("Y Coordinate: ");
 
-      if ((iaBoard[iX][iY] == 0) &&
-         ((iX == 9) || (iaBoard[iX + 1][iY] == 0)) &&
-         ((iX == 0) || (iaBoard[iX - 1][iY] == 0)) &&
-         ((iY == 9) || (iaBoard[iX][iY + 1] == 0)) &&
-         ((iY == 0) || (iaBoard[iX][iY - 1] == 0)))
+      if ((iaBoard[iY][iX] == 0) &&
+         ((iX == 9) || (iaBoard[iY][iX + 1] == 0)) &&
+         ((iX == 0) || (iaBoard[iY][iX - 1] == 0)) &&
+         ((iY == 9) || (iaBoard[iY + 1][iX] == 0)) &&
+         ((iY == 0) || (iaBoard[iY - 1][iX] == 0)))
       {
          iaBoard[iY][iX] = 1;
          fleet[index].coordinates[0].iColumn = iX;
@@ -158,7 +158,7 @@ void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index)
       }
       else {
          iErr = -1;
-         printf("Please try again");
+         printf("Place occupied or to close\n");
       }
 
    } while (iErr == -1);
@@ -445,6 +445,23 @@ int checkSunkShip(t_Ship fleet[], int iCurrentShip)
    }
    fleet[1].iSunk = 1; // Markiere das Schiff als versenkt
    return 1;
+}
+
+void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
+{
+   int y = 0;
+   int x = 0;
+   for (int i = 0; i < TOTALSHIPS; i++) 
+   {
+      for (int j = 0; j < fleet[i].iLength; j++) {
+         fleet[i].coordinates[j].iColumn = x;
+         fleet[i].coordinates[j].iRow = y;
+         fleet[i].coordinates[j].iIsHit = 0;
+         iaBoard[y][x] = fleet[i].iLength;
+         x++;
+      }
+      y++;
+   }
 }
 
 /*
