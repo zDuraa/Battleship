@@ -5,14 +5,15 @@ int main() {
     systemMessage("                            Hit <ENTER> to continue!\n");
     system("cls");
 
-    t_Ship fleet[TOTALSHIPS];
-    vFillFleet(fleet);
+    
     t_Board PlayerA = vCreateBoard(0);
+    vFillFleet(PlayerA.fleet);
     t_Board PlayerB = vCreateBoard(1);
+    vFillFleet(PlayerB.fleet);
    
 
     vPrintBoard(PlayerA.iaBoard);
-    vSetFleet(fleet, PlayerA.iaBoard);
+    vSetFleet(PlayerA.fleet, PlayerA.iaBoard);
     vPrintBoard(PlayerA.iaBoard);
     return 0;
 }
