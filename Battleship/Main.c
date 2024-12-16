@@ -13,7 +13,7 @@ int main() {
    
 
     vPrintBoard(PlayerA.iaBoard);
-   // vSetFleet(PlayerA.fleet, PlayerA.iaBoard);
+    //vSetFleet(PlayerA.fleet, PlayerA.iaBoard);
     vPrintBoard(PlayerA.iaBoard);
 
     //------------ Test Bereich -----------
@@ -33,10 +33,7 @@ int main() {
        int iTreffer = 0;
        //Player A;
        printf("Spieler A turn\n");
-       for (int i = 0; i < 4; i++)
-       {
-           printf("X-Coord: %d      Y-Coord: %d\n",PlayerB.fleet->coordinates[i].iColumn, PlayerB.fleet->coordinates[i].iRow);
-       }
+       
        do {
           iTreffer = vShoot(&PlayerB);
           vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);

@@ -321,6 +321,7 @@ void vFillFleet(t_Ship fleet[]) {
    // • 1 Schiff der Länge 4
 
    fleet[index].iLength = 4;
+   fleet[index].iHitMarker = 0;
    fleet[index].iShipId = index;
    index++;
 
@@ -328,6 +329,7 @@ void vFillFleet(t_Ship fleet[]) {
    for (int i = 0; i < 2; i++) {
       fleet[index].iLength = 3;
       fleet[index].iShipId = index;
+      fleet[index].iHitMarker = 0;
       index++;
    }
 
@@ -335,6 +337,7 @@ void vFillFleet(t_Ship fleet[]) {
    for (int i = 0; i < 3; i++) {
       fleet[index].iLength = 2;
       fleet[index].iShipId = index;
+      fleet[index].iHitMarker = 0;
       index++;
    }
 
@@ -342,6 +345,7 @@ void vFillFleet(t_Ship fleet[]) {
    for (int i = 0; i < 4; i++) {
       fleet[index].iLength = 1;
       fleet[index].iShipId = index;
+      fleet[index].iHitMarker = 0;
       index++;
    }
 }
@@ -441,7 +445,6 @@ int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iX
 void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, t_Ship fleet[], int index) {
    int x = 0;
    int y = 0;
-   fleet[index].iShipId = index;
    for (int i = 0; i < fleet[index].iLength; i++) {
       if (iYfirst == iYlast) {
          // Horizontales Schiff
@@ -457,43 +460,42 @@ void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast
       fleet[index].coordinates[i].iColumn = x;
       fleet[index].coordinates[i].iRow = y;
       fleet[index].coordinates[i].iIsHit = 0;
-      fleet[index].iHitMarker = 0;
       iaBoard[y][x] = fleet[index].iLength;
    }
 }
 
 int checkShot(int iX, int iY, t_Ship fleet[], int* shipIndex)
 {
+   int ret = 0;
    for (int i = 0; i < TOTALSHIPS; i++) { //gehen alle Schiffe durch
       for (int j = 0; j < fleet[i].iLength; j++) { //dann iterrieren wir durch das Schiff, entsprächend seiner länge
          if (fleet[i].coordinates[j].iColumn == iX &&
-            fleet[i].coordinates[j].iRow == iY) //und dann überprüfen wir, ob es die Koordinaten enthält, die wir abschießen wollen
+             fleet[i].coordinates[j].iRow == iY) //und dann überprüfen wir, ob es die Koordinaten enthält, die wir abschießen wollen
          {
             if (fleet[i].coordinates[j].iIsHit == 0) { //Wurde es schon getroffen?
                fleet[i].coordinates[j].iIsHit = 1;
                fleet[i].iHitMarker = fleet[i].iHitMarker + 1;
-               return 1; // Treffer
+               
+               ret = 1; // Treffer
             }
-            else {
-               return 2; // Schon getroffen
+            else {              
+               ret = 2; // Schon getroffen
             }
             *shipIndex = fleet[i].iShipId;
          }
       }
       
    }
-   return 0; // Kein Treffer / Miss
+   return ret; // Kein Treffer / Miss
 }
 
-int checkSunkShip(t_Ship fleet[], int iIndexOfShip)
+int checkSunkShip(t_Ship fleet[], int index)
 {
    for (int i = 0; i < TOTALSHIPS; i++) 
    {
-         printf("iHitmarker %d\n", fleet[i].iHitMarker);
-         printf("iLength %d\n", fleet[i].iLength);
-         if ((fleet[i].iShipId == iIndexOfShip) && (fleet[i].iHitMarker == fleet[i].iLength)) {
-            fleet[i].iSunk = 1;
-            return fleet[i].iSunk;
+         if ((fleet[index].iShipId == index) && (fleet[index].iHitMarker == fleet[index].iLength)) {
+            fleet[index].iSunk = 1;
+            return fleet[index].iSunk;
          }
          else {
             break;
