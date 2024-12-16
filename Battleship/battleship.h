@@ -56,6 +56,7 @@ extern volatile short int siPlayer;	           // 0 -> player1, 1 -> player2
 //-------------------------------------------------------------------
 t_Board vCreateBoard(int iPlayerId);
 void vPrintBoard(int iaBoard[][BOARDLENGTH]);
+void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]);
 void vFillFleet(t_Ship fleet[]);
 void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 void vIntroduction(void);
@@ -67,6 +68,7 @@ void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index);
 void vSwap(int* iFirst, int* iLast);
 
 char vConvertSetup(int iCellValue);
+char vConvertSetupEnemy(int iCellValue);
 char vConvertPlay(int iCellValue);
 void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);
 void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);

@@ -59,6 +59,34 @@ void vPrintBoard(int iaBoard[][BOARDLENGTH]) {
    }
 }
 
+void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]){
+    char caLetters[BOARDLENGTH] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
+
+    // Kopfzeile (Zahlen von 0 bis 9)
+    for (int j = 0; j < 2; j++) {
+        printf("  ");
+        for (int i = 0; i < BOARDLENGTH; i++) {
+            printf("%d ", i);
+        }
+        printf("\t\t\t");
+    }
+    printf("\n");
+
+    // Board-Zeilen mit Buchstaben und Werten
+    for (int iX = 0; iX < BOARDLENGTH; iX++) {
+        printf("%c ", caLetters[iX]);
+        for (int iY = 0; iY < BOARDLENGTH; iY++) {
+            printf("%c ", vConvertSetup(iaBoard[iX][iY]));
+        }
+        printf("\t\t\t");
+        printf("%c ", caLetters[iX]);
+        for (int iY = 0; iY < BOARDLENGTH; iY++) {
+            printf("%c ", vConvertSetupEnemy(ibBoard[iX][iY]));
+        }
+        printf("\n");
+    }
+}
+
 //Puts Ship on Board
 void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
 {
@@ -341,12 +369,35 @@ char vConvertSetup(int iCellValue) {
    case 4:
       return 'b';
       break;
+   case 5:
+       return 'x';
+       break;
+   case 6:
+       return 'X';
+       break;
    case 7:
-      return '!';
-      break;
+       return 'M';
+       break;
    default:
       return '~';
    }
+}
+
+char vConvertSetupEnemy(int iCellValue) {
+    switch (iCellValue)
+    {
+    case 5:
+        return 'x';
+        break;
+    case 6:
+        return 'X';
+        break;
+    case 7:
+        return 'M';
+        break;
+    default:
+        return '?';
+    }
 }
 
 char vConvertPlay(int iCellValue) {
@@ -471,6 +522,8 @@ void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
     2 - s Schiff der größe 2
     3 - c Schiff der größe 3
     4 - b Schiff der größe 4
-    5 - X Treffer
-    6 - M Daneben
+    5 - x Treffer
+    6 - X Versenkt
+    7 - M Daneben
+    8 - ? Unbekannt
 */
