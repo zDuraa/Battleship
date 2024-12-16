@@ -28,6 +28,7 @@ typedef struct sShip {
     int iLength;                           // Länge des Schiffes
     int iSunk;
     Coordinate coordinates[MAX_SHIP_SIZE];
+    int iHitMarker;
     int iShipId;
 } t_Ship;
 
@@ -77,7 +78,7 @@ int iGetX(char* message);
 int iGetY(char* message);
 int iCheckShipSize(int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
 int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
-int checkSunkShip(t_Ship fleet[]);
-int checkShot(int iX, int iY, t_Ship fleet[]);
-int vShoot(t_Ship fleet[]);
+int checkSunkShip(t_Ship fleet[], int iIndexOfShip);
+int checkShot(int iX, int iY, t_Ship fleet[], int* shipIndex);
+int vShoot(t_Board *Enemy);
 

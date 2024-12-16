@@ -474,7 +474,7 @@ void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast
    }
 }
 
-int checkShot(int iX, int iY, t_Ship fleet[])
+int checkShot(int iX, int iY, t_Ship fleet[], int* shipIndex)
 {
    for (int i = 0; i < TOTALSHIPS; i++) { //gehen alle Schiffe durch
       for (int j = 0; j < fleet[i].iLength; j++) { //dann iterrieren wir durch das Schiff, entsprächend seiner länge
@@ -483,6 +483,8 @@ int checkShot(int iX, int iY, t_Ship fleet[])
          {
             if (fleet[i].coordinates[j].iIsHit == 0) { //Wurde es schon getroffen?
                fleet[i].coordinates[j].iIsHit = 1;
+               fleet[i].iHitMarker += 1;
+               *shipIndex = fleet[i].iShipId;
                return 1; // Treffer
             }
             else {
@@ -495,26 +497,20 @@ int checkShot(int iX, int iY, t_Ship fleet[])
    return 0; // Kein Treffer / Miss
 }
 
-int checkSunkShip(t_Ship fleet[])
+int checkSunkShip(t_Ship fleet[], int iIndexOfShip)
 {
-   int iHitMarker = 0;
    for (int i = 0; i < TOTALSHIPS; i++) 
    {
       for (int j = 0; j < fleet[i].iLength; j++) 
       {
-         if (fleet[i].coordinates[j].iIsHit == 1) {
-            iHitMarker++;
+         if (fleet[i].iShipId == iIndexOfShip) {
+            fleet[i].iSunk = 1;
+            return fleet[i].iSunk;
          }
          else {
             break;
          }
-
-         if (iHitMarker == fleet[i].iLength) {
-            fleet[i].iSunk = 1;
-            return fleet[i].iSunk;
-         }
       }
-      iHitMarker = 0;
    }
    return 0;
 }
@@ -523,7 +519,7 @@ void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
 {
    int y = 0;
    int x = 0;
-   for (int i = 0; i < TOTALSHIPS; i++) 
+   for (int i = 0; i < 3; i++) 
    {
       for (int j = 0; j < fleet[i].iLength; j++) {
          fleet[i].coordinates[j].iColumn = x;
@@ -534,29 +530,47 @@ void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
       }
       y++;
    }
+
+   x = 0;
+   for (int i = 3; i < TOTALSHIPS; i++)
+   {
+       for (int j = 0; j < fleet[i].iLength; j++) {
+           fleet[i].coordinates[j].iColumn = x;
+           fleet[i].coordinates[j].iRow = y;
+           fleet[i].coordinates[j].iIsHit = 0;
+           iaBoard[y][x] = fleet[i].iLength;
+           x++;
+       }
+       y++;
+   }
 }
 
 
-int vShoot(t_Ship fleet[])
+int vShoot(t_Board *Enemy)
 {
+   int iIndexOfShip = 0;
+
    printf("Please enter the coordinate that you want to shoot at\n");
    int iX = iGetX("X Coordinate: ");
    int iY = iGetY("Y Coordinate: ");
 
 
 
-   int iTemp = checkShot(iX, iY, fleet);
+   int iTemp = checkShot(iX, iY, Enemy->fleet, &iIndexOfShip);
    int iGoAgain = 0;
 
    switch (iTemp) {
    case 0:
       printf("Missed\n");
       iGoAgain = 0;
+      Enemy->iaBoard[iY][iX] = 7;
       break;
    case 1:
       printf("Hit\n");
-      if (checkSunkShip(fleet) == 1) {
+      Enemy->iaBoard[iY][iX] = 5;
+      if (checkSunkShip(Enemy->fleet, iIndexOfShip) == 1) {
          printf("Ship Sunk!\n");
+         Enemy->iaBoard[iY][iX] = 6;
       }
       iGoAgain = 1;
       break;
@@ -567,6 +581,7 @@ int vShoot(t_Ship fleet[])
    default:
       printf("Error, schiff wurde nicht getroffen oder verfehlt, hä?\n");    
    }
+
 
    return iGoAgain;
 }
