@@ -53,7 +53,7 @@ void vPrintBoard(int iaBoard[][BOARDLENGTH]) {
    for (int iX = 0; iX < BOARDLENGTH; iX++) {
       printf("%c ", caLetters[iX]);
       for (int iY = 0; iY < BOARDLENGTH; iY++) {
-         printf("%c ", vConvertSetup(iaBoard[iX][iY]));
+         printf("%c ", cConvertSetup(iaBoard[iX][iY]));
       }
       printf("\n");
    }
@@ -76,12 +76,12 @@ void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]){
     for (int iX = 0; iX < BOARDLENGTH; iX++) {
         printf("%c ", caLetters[iX]);
         for (int iY = 0; iY < BOARDLENGTH; iY++) {
-            printf("%c ", vConvertSetup(iaBoard[iX][iY]));
+            printf("%c ", cConvertSetup(iaBoard[iX][iY]));
         }
         printf("\t\t\t");
         printf("%c ", caLetters[iX]);
         for (int iY = 0; iY < BOARDLENGTH; iY++) {
-            printf("%c ", vConvertSetupEnemy(ibBoard[iX][iY]));
+            printf("%c ", cConvertSetupEnemy(ibBoard[iX][iY]));
         }
         printf("\n");
     }
@@ -355,7 +355,7 @@ void systemMessage(char* message) {
    } while ((ch = _getch()) != '\r');
 }
 
-char vConvertSetup(int iCellValue) {
+char cConvertSetup(int iCellValue) {
    switch (iCellValue)
    {
    case 1:
@@ -384,7 +384,7 @@ char vConvertSetup(int iCellValue) {
    }
 }
 
-char vConvertSetupEnemy(int iCellValue) {
+char cConvertSetupEnemy(int iCellValue) {
     switch (iCellValue)
     {
     case 5:
@@ -399,20 +399,6 @@ char vConvertSetupEnemy(int iCellValue) {
     default:
         return '?';
     }
-}
-
-char vConvertPlay(int iCellValue) {
-   switch (iCellValue)
-   {
-   case 4:
-      return 'X';
-      break;
-   case 5:
-      return 'M';
-      break;
-   default:
-      return '?';
-   }
 }
 
 void vSwap(int* iFirst, int* iLast) {

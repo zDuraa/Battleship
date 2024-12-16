@@ -70,9 +70,8 @@ void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);
 void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, t_Ship fleet[], int index);
 void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 
-char vConvertSetup(int iCellValue);
-char vConvertSetupEnemy(int iCellValue);
-char vConvertPlay(int iCellValue);
+char cConvertSetup(int iCellValue);
+char cConvertSetupEnemy(int iCellValue);
 
 int iGetX(char* message);
 int iGetY(char* message);
