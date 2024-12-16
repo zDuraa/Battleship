@@ -79,5 +79,5 @@ int iCheckShipSize(int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSi
 int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
 int checkSunkShip(t_Ship fleet[]);
 int checkShot(int iX, int iY, t_Ship fleet[]);
-int vShoot(t_Ship fleet[]);
+int vShoot(t_Board *Enemy);
 

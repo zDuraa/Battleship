@@ -523,7 +523,7 @@ void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
 {
    int y = 0;
    int x = 0;
-   for (int i = 0; i < TOTALSHIPS; i++) 
+   for (int i = 0; i < 3; i++) 
    {
       for (int j = 0; j < fleet[i].iLength; j++) {
          fleet[i].coordinates[j].iColumn = x;
@@ -534,10 +534,23 @@ void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
       }
       y++;
    }
+
+   x = 0;
+   for (int i = 3; i < TOTALSHIPS; i++)
+   {
+       for (int j = 0; j < fleet[i].iLength; j++) {
+           fleet[i].coordinates[j].iColumn = x;
+           fleet[i].coordinates[j].iRow = y;
+           fleet[i].coordinates[j].iIsHit = 0;
+           iaBoard[y][x] = fleet[i].iLength;
+           x++;
+       }
+       y++;
+   }
 }
 
 
-int vShoot(t_Ship fleet[])
+int vShoot(t_Board *Enemy)
 {
    printf("Please enter the coordinate that you want to shoot at\n");
    int iX = iGetX("X Coordinate: ");
@@ -545,18 +558,21 @@ int vShoot(t_Ship fleet[])
 
 
 
-   int iTemp = checkShot(iX, iY, fleet);
+   int iTemp = checkShot(iX, iY, Enemy->fleet);
    int iGoAgain = 0;
 
    switch (iTemp) {
    case 0:
       printf("Missed\n");
       iGoAgain = 0;
+      Enemy->iaBoard[iY][iX] = 7;
       break;
    case 1:
       printf("Hit\n");
-      if (checkSunkShip(fleet) == 1) {
-         printf("Ship Sunk!");
+      Enemy->iaBoard[iY][iX] = 5;
+      if (checkSunkShip(Enemy->fleet) == 1) {
+         printf("Ship Sunk!\n");
+         Enemy->iaBoard[iY][iX] = 6;
       }
       iGoAgain = 1;
       break;
