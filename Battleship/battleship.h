@@ -48,7 +48,7 @@ typedef struct cell {
 //-------------------------------------------------------------------
 // Declaration system globals
 
-extern volatile short int siPlayer;	           // 0 -> player1, 1 -> player2 
+extern short int siPlayer;	           // 0 -> player1, 1 -> player2 
 
 //-------------------------------------------------------------------
 // Declaration functions                                           
