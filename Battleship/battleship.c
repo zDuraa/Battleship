@@ -556,7 +556,7 @@ int vShoot(t_Ship fleet[])
    case 1:
       printf("Hit\n");
       if (checkSunkShip(fleet) == 1) {
-         printf("Ship Sunk!");
+         printf("Ship Sunk!\n");
       }
       iGoAgain = 1;
       break;
