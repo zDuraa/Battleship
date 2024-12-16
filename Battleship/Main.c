@@ -13,7 +13,7 @@ int main() {
    
 
     vPrintBoard(PlayerA.iaBoard);
-    vSetFleet(PlayerA.fleet, PlayerA.iaBoard);
+   // vSetFleet(PlayerA.fleet, PlayerA.iaBoard);
     vPrintBoard(PlayerA.iaBoard);
 
     //------------ Test Bereich -----------
@@ -24,6 +24,21 @@ int main() {
     printf("///////////////////////////////////////////\n");
     vPrintBoard(PlayerA.iaBoard);
     //------------ Test Bereich -----------
+    
+    while (1) //Noch keine Win Condition
+    {
+       int iTreffer = 0;
+       //Player A;
+       printf("Spieler A turn\n");
+       do {
+          iTreffer = vShoot(PlayerB.fleet);
+       } while (iTreffer == 1);
+       printf("Reached End\n");
+    }
+
+
+
+
     return 0;
 }
 

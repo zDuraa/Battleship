@@ -26,7 +26,6 @@ typedef struct coordinate {
 
 typedef struct sShip {
     int iLength;                           // Länge des Schiffes
-    int iaHits[MAX_SHIP_SIZE];            // 1 = getroffen, 0 = nicht getroffen
     int iSunk;
     Coordinate coordinates[MAX_SHIP_SIZE];
     int iShipId;
@@ -55,27 +54,28 @@ extern volatile short int siPlayer;	           // 0 -> player1, 1 -> player2
 // Declaration functions                                           
 //-------------------------------------------------------------------
 t_Board vCreateBoard(int iPlayerId);
+
 void vPrintBoard(int iaBoard[][BOARDLENGTH]);
 void vFillFleet(t_Ship fleet[]);
 void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 void vIntroduction(void);
 void systemMessage(char* message);
-
 void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index);
 void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index);
-
 void vSwap(int* iFirst, int* iLast);
+void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);
+void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);
+void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, t_Ship fleet[], int index);
+void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 
 char vConvertSetup(int iCellValue);
 char vConvertPlay(int iCellValue);
-void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);
-void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);
+
 int iGetX(char* message);
 int iGetY(char* message);
 int iCheckShipSize(int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
 int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
-int checkSunkShip(t_Ship fleet[], int iCurrentShip);
-int checkShot(int iX, int iY, t_Ship fleet[], int iCurrentShip);
+int checkSunkShip(t_Ship fleet[]);
+int checkShot(int iX, int iY, t_Ship fleet[]);
+int vShoot(t_Ship fleet[]);
 
-void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, t_Ship fleet[], int index);
-void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);

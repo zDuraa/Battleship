@@ -423,28 +423,49 @@ void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast
    }
 }
 
-int checkShot(int iX, int iY, t_Ship fleet[], int iCurrentShip)
+int checkShot(int iX, int iY, t_Ship fleet[])
 {
-   for (int i = 0; i < fleet[iCurrentShip].iLength; i++) {
-      if (fleet[iCurrentShip].coordinates[i].iColumn == iX && fleet[iCurrentShip].coordinates[i].iRow == iY) {
-         if (fleet[iCurrentShip].iaHits[i] == 0) {
-            fleet[iCurrentShip].iaHits[i] = 1;
-            return 1;
+   for (int i = 0; i < TOTALSHIPS; i++) { //gehen alle Schiffe durch
+      for (int j = 0; j < fleet[i].iLength; j++) { //dann iterrieren wir durch das Schiff, entsprächend seiner länge
+         if (fleet[i].coordinates[j].iColumn == iX &&
+            fleet[i].coordinates[j].iRow == iY) //und dann überprüfen wir, ob es die Koordinaten enthält, die wir abschießen wollen
+         {
+            if (fleet[i].coordinates[j].iIsHit == 0) { //Wurde es schon getroffen?
+               fleet[i].coordinates[j].iIsHit = 1;
+               return 1; // Treffer
+            }
+            else {
+               return 2; // Schon getroffen
+            }
          }
       }
+      
    }
-   return 0; // Kein Treffer
+   return 0; // Kein Treffer / Miss
 }
 
-int checkSunkShip(t_Ship fleet[], int iCurrentShip)
+int checkSunkShip(t_Ship fleet[])
 {
-   for (int i = 0; i < fleet[iCurrentShip].iLength; i++) {
-      if (fleet[iCurrentShip].iaHits == 0) {
-         return 0;  // Noch nicht alle Positionen getroffen
+   int iHitMarker = 0;
+   for (int i = 0; i < TOTALSHIPS; i++) 
+   {
+      for (int j = 0; j < fleet[i].iLength; j++) 
+      {
+         if (fleet[i].coordinates[j].iIsHit == 1) {
+            iHitMarker++;
+         }
+         else {
+            break;
+         }
+
+         if (iHitMarker == fleet[i].iLength) {
+            fleet[i].iSunk = 1;
+            return fleet[i].iSunk;
+         }
       }
+      iHitMarker = 0;
    }
-   fleet[1].iSunk = 1; // Markiere das Schiff als versenkt
-   return 1;
+   return 0;
 }
 
 void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
@@ -462,6 +483,41 @@ void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
       }
       y++;
    }
+}
+
+
+int vShoot(t_Ship fleet[])
+{
+   printf("Please enter the coordinate that you want to shoot at\n");
+   int iX = iGetX("X Coordinate: ");
+   int iY = iGetY("Y Coordinate: ");
+
+
+
+   int iTemp = checkShot(iX, iY, fleet);
+   int iGoAgain = 0;
+
+   switch (iTemp) {
+   case 0:
+      printf("Missed\n");
+      iGoAgain = 0;
+      break;
+   case 1:
+      printf("Hit\n");
+      if (checkSunkShip(fleet) == 1) {
+         printf("Ship Sunk!");
+      }
+      iGoAgain = 1;
+      break;
+   case 2:
+      printf("Already Hit, go again\n");
+      iGoAgain = 1;
+      break;
+   default:
+      printf("Error, schiff wurde nicht getroffen oder verfehlt, hä?\n");    
+   }
+
+   return iGoAgain;
 }
 
 /*
