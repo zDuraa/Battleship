@@ -56,6 +56,7 @@ extern short int siPlayer;	           // 0 -> player1, 1 -> player2
 t_Board vCreateBoard(int iPlayerId);
 
 void vPrintBoard(int iaBoard[][BOARDLENGTH]);
+void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]);
 void vFillFleet(t_Ship fleet[]);
 void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 void vIntroduction(void);
@@ -69,6 +70,7 @@ void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast
 void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 
 char vConvertSetup(int iCellValue);
+char vConvertSetupEnemy(int iCellValue);
 char vConvertPlay(int iCellValue);
 
 int iGetX(char* message);

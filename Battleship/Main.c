@@ -20,9 +20,12 @@ int main() {
     vDebugSetShip(PlayerB.fleet, PlayerB.iaBoard);
 
     system("cls");
-    vPrintBoard(PlayerB.iaBoard);
-    printf("///////////////////////////////////////////\n");
-    vPrintBoard(PlayerA.iaBoard);
+    vPrintPlayBoards(PlayerA.iaBoard,PlayerB.iaBoard);
+
+    printf("\n/////////////////////////\n\n");
+
+    vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
+    
     //------------ Test Bereich -----------
     
     while (1) //Noch keine Win Condition
