@@ -181,6 +181,7 @@ void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index)
          fleet[index].coordinates[0].iRow = iY;
          fleet[index].coordinates[0].iIsHit = 0;
          fleet[index].iShipId = index;
+         fleet[index].iHitMarker = 0;
 
          iErr = 0;
       }
@@ -470,6 +471,7 @@ void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast
       fleet[index].coordinates[i].iColumn = x;
       fleet[index].coordinates[i].iRow = y;
       fleet[index].coordinates[i].iIsHit = 0;
+      fleet[index].iHitMarker = 0;
       iaBoard[y][x] = fleet[index].iLength;
    }
 }
@@ -484,12 +486,12 @@ int checkShot(int iX, int iY, t_Ship fleet[], int* shipIndex)
             if (fleet[i].coordinates[j].iIsHit == 0) { //Wurde es schon getroffen?
                fleet[i].coordinates[j].iIsHit = 1;
                fleet[i].iHitMarker += 1;
-               *shipIndex = fleet[i].iShipId;
                return 1; // Treffer
             }
             else {
                return 2; // Schon getroffen
             }
+            *shipIndex = fleet[i].iShipId;
          }
       }
       
@@ -501,16 +503,15 @@ int checkSunkShip(t_Ship fleet[], int iIndexOfShip)
 {
    for (int i = 0; i < TOTALSHIPS; i++) 
    {
-      for (int j = 0; j < fleet[i].iLength; j++) 
-      {
-         if (fleet[i].iShipId == iIndexOfShip) {
+         printf("iHitmarker %d\n", fleet[i].iHitMarker);
+         printf("iLength %d\n", fleet[i].iLength);
+         if ((fleet[i].iShipId == iIndexOfShip) && (fleet[i].iHitMarker == fleet[i].iLength)) {
             fleet[i].iSunk = 1;
             return fleet[i].iSunk;
          }
          else {
             break;
          }
-      }
    }
    return 0;
 }
