@@ -471,7 +471,7 @@ int checkShot(int iX, int iY, t_Ship fleet[], int* shipIndex)
          {
             if (fleet[i].coordinates[j].iIsHit == 0) { //Wurde es schon getroffen?
                fleet[i].coordinates[j].iIsHit = 1;
-               fleet[i].iHitMarker += 1;
+               fleet[i].iHitMarker = fleet[i].iHitMarker + 1;
                return 1; // Treffer
             }
             else {
