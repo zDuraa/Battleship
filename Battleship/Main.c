@@ -13,11 +13,12 @@ int main() {
    
 
     vPrintBoard(PlayerA.iaBoard);
-    //vSetFleet(PlayerA.fleet, PlayerA.iaBoard);
+    //vSetFleet(&PlayerA);
     vPrintBoard(PlayerA.iaBoard);
 
     //------------ Test Bereich -----------
-    vDebugSetShip(PlayerB.fleet, PlayerB.iaBoard);
+    vDebugSetShip(&PlayerB);
+    vDebugSetShip(&PlayerA);
 
     system("cls");
     vPrintPlayBoards(PlayerA.iaBoard,PlayerB.iaBoard);
@@ -25,23 +26,58 @@ int main() {
     printf("\n/////////////////////////\n\n");
 
     vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
+    printf("Total Hit Points Player A: %d\n", PlayerA.iTotalHits);
+    printf("Total Hit Points Player B: %d\n", PlayerB.iTotalHits);
     
     //------------ Test Bereich -----------
     
-    while (1) //Noch keine Win Condition
+    int iWinCondition = 0;
+
+    do 
     {
-       int iTreffer = 0;
+       int iTreffer = 1;
        //Player A;
        printf("Spieler A turn\n");
        
-       do {
+       while ((iTreffer == 1) && (iWinCondition == 0)) 
+       {
+           vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
+           //vPrintPlayBoards(PlayerA.iaBoard, PlayerB.iaBoard);
           iTreffer = vShoot(&PlayerB);
-          vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
-       } while (iTreffer == 1);
+          
+          if (PlayerB.iTotalHits == 0)
+          {
+              iWinCondition = 1;
+          }
+       }
+       //Transition Screen needed
+       iTreffer = 1;
+       //Player B;
+       printf("Spieler B turn\n");
+
+       while ((iTreffer == 1) && (iWinCondition == 0))
+       {
+           vPrintPlayBoards(PlayerA.iaBoard, PlayerB.iaBoard);
+           //vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
+           iTreffer = vShoot(&PlayerA);
+           
+           if (PlayerA.iTotalHits == 0)
+           {
+               iWinCondition = 2;
+           }
+       }
        printf("Reached End\n");
+    } while (iWinCondition == 0);    
+
+    if (iWinCondition == 1)
+    {
+        printf("Player A Wins\n");
     }
-
-
+    else {
+        printf("Player B Wins\n");
+    }
+    
+    // Victory Screen ?
 
 
     return 0;

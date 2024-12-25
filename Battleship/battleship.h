@@ -36,6 +36,7 @@ typedef struct sBoard {
     int iaBoard[BOARDLENGTH][BOARDLENGTH];
     int iPlayer;
     t_Ship fleet[TOTALSHIPS];
+    int iTotalHits;
 } t_Board;
 
 
@@ -59,17 +60,15 @@ t_Board vCreateBoard(int iPlayerId);
 void vPrintBoard(int iaBoard[][BOARDLENGTH]);
 void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]);
 void vFillFleet(t_Ship fleet[]);
-void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
+void vSetFleet(t_Board* Player);
 void vIntroduction(void);
-void systemMessage(char* message);
-void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index);
-void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index);
-void vSwap(int* iFirst, int* iLast);
-void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);
-void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);
-void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, t_Ship fleet[], int index);
-void vSetShipToSunk(t_Board* Enemy, int iShipIndex);
-void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
+void systemMessage(char *message);
+void vSetLongShip(t_Board *Player, int index);
+void vSetShortShip(t_Board *Player, int index);
+void vSwap(int* iFirst, int *iLast);
+void vPlaceShip(t_Board *Player, int iXfirst, int iYfirst, int iXlast, int iYlast, int index);
+void vSetShipToSunk(t_Board *Enemy, int iShipIndex);
+void vDebugSetShip(t_Board *Player);
 
 char cConvertSetup(int iCellValue);
 char cConvertSetupEnemy(int iCellValue);
@@ -79,6 +78,6 @@ int iGetY(char* message);
 int iCheckShipSize(int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
 int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
 int checkSunkShip(t_Ship fleet[], int iIndexOfShip);
-int checkShot(int iX, int iY, t_Ship fleet[], int* shipIndex);
+int checkShot(int iX, int iY, t_Ship fleet[], int *shipIndex);
 int vShoot(t_Board *Enemy);
 

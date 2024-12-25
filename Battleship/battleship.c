@@ -34,6 +34,7 @@ t_Board vCreateBoard(int iPlayerId) {
    }
 
    PlayerBoard.iPlayer = iPlayerId;
+   PlayerBoard.iTotalHits = 0;
 
    return PlayerBoard;
 }
@@ -88,29 +89,29 @@ void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]){
 }
 
 //Puts Ship on Board
-void vSetFleet(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
+void vSetFleet(t_Board *Player)
 {
    printf("Enter coordinates to place a ship on the board\n");
    for (int i = 0; i < TOTALSHIPS; i++)
    {
-      printf("Placing a Ship with the size of %d\n", fleet[i].iLength);
-      if (fleet[i].iLength > 1)
+      printf("Placing a Ship with the size of %d\n", Player->fleet[i].iLength);
+      if (Player->fleet[i].iLength > 1)
       {
 
-         vSetLongShip(iaBoard, fleet, i);
+         vSetLongShip(Player, i);
          system("cls");
-         vPrintBoard(iaBoard);
+         vPrintBoard(Player->iaBoard);
       }
       else {
 
-         vSetShortShip(iaBoard, fleet, i);
+         vSetShortShip(Player, i);
          system("cls");
-         vPrintBoard(iaBoard);
+         vPrintBoard(Player->iaBoard);
       }
    }
 }
 
-void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index) {
+void vSetLongShip(t_Board *Player, int index) {
    int iXfirst, iYfirst, iXlast, iYlast, iErr;
 
    do
@@ -136,11 +137,11 @@ void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index) {
          }
 
          // Überprüfe die Schiffgröße
-         if (iCheckShipSize(iXfirst, iYfirst, iXlast, iYlast, fleet[index].iLength)) {
+         if (iCheckShipSize(iXfirst, iYfirst, iXlast, iYlast, Player->fleet[index].iLength)) {
             // Überprüfe ob Platz frei ist
-            if (iCheckFreeSpace(iaBoard, iXfirst, iYfirst, iXlast, iYlast, fleet[index].iLength)) {
+            if (iCheckFreeSpace(Player->iaBoard, iXfirst, iYfirst, iXlast, iYlast, Player->fleet[index].iLength)) {
                // Platziere das Schiff
-               vPlaceShip(iaBoard, iXfirst, iYfirst, iXlast, iYlast, fleet, index);
+               vPlaceShip(Player, iXfirst, iYfirst, iXlast, iYlast, index);
             }
             else {
                iErr = -1;
@@ -159,7 +160,7 @@ void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index) {
    } while (iErr == -1);
 }
 
-void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index)
+void vSetShortShip(t_Board *Player, int index)
 {
    int iX = 0;
    int iY = 0;
@@ -170,18 +171,19 @@ void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int index)
       iX = iGetX("X Coordinate: ");
       iY = iGetY("Y Coordinate: ");
 
-      if ((iaBoard[iY][iX] == 0) &&
-         ((iX == 9) || (iaBoard[iY][iX + 1] == 0)) &&
-         ((iX == 0) || (iaBoard[iY][iX - 1] == 0)) &&
-         ((iY == 9) || (iaBoard[iY + 1][iX] == 0)) &&
-         ((iY == 0) || (iaBoard[iY - 1][iX] == 0)))
+      if ((Player->iaBoard[iY][iX] == 0) &&
+         ((iX == 9) || (Player->iaBoard[iY][iX + 1] == 0)) &&
+         ((iX == 0) || (Player->iaBoard[iY][iX - 1] == 0)) &&
+         ((iY == 9) || (Player->iaBoard[iY + 1][iX] == 0)) &&
+         ((iY == 0) || (Player->iaBoard[iY - 1][iX] == 0)))
       {
-         iaBoard[iY][iX] = 1;
-         fleet[index].coordinates[0].iColumn = iX;
-         fleet[index].coordinates[0].iRow = iY;
-         fleet[index].coordinates[0].iIsHit = 0;
-         fleet[index].iShipId = index;
-         fleet[index].iHitMarker = 0;
+          Player->iaBoard[iY][iX] = 1;
+          Player->fleet[index].coordinates[0].iColumn = iX;
+          Player->fleet[index].coordinates[0].iRow = iY;
+          Player->fleet[index].coordinates[0].iIsHit = 0;
+          Player->fleet[index].iShipId = index;
+          Player->fleet[index].iHitMarker = 0;
+          Player->iTotalHits++;
 
          iErr = 0;
       }
@@ -405,7 +407,7 @@ char cConvertSetupEnemy(int iCellValue) {
     }
 }
 
-void vSwap(int* iFirst, int* iLast) {
+void vSwap(int *iFirst, int *iLast) {
    int temp = *iFirst;
    *iFirst = *iLast;
    *iLast = temp;
@@ -442,10 +444,10 @@ int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iX
    return 1; // Platz ist frei
 }
 
-void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, t_Ship fleet[], int index) {
+void vPlaceShip(t_Board *Player, int iXfirst, int iYfirst, int iXlast, int iYlast, int index) {
    int x = 0;
    int y = 0;
-   for (int i = 0; i < fleet[index].iLength; i++) {
+   for (int i = 0; i < Player->fleet[index].iLength; i++) {
       if (iYfirst == iYlast) {
          // Horizontales Schiff
          x = iXfirst + i;
@@ -457,10 +459,11 @@ void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast
          x = iXfirst;
          y = iYfirst + i;
       }
-      fleet[index].coordinates[i].iColumn = x;
-      fleet[index].coordinates[i].iRow = y;
-      fleet[index].coordinates[i].iIsHit = 0;
-      iaBoard[y][x] = fleet[index].iLength;
+      Player->fleet[index].coordinates[i].iColumn = x;
+      Player->fleet[index].coordinates[i].iRow = y;
+      Player->fleet[index].coordinates[i].iIsHit = 0;
+      Player->iaBoard[y][x] = Player->fleet[index].iLength;
+      Player->iTotalHits++;
    }
 }
 
@@ -522,6 +525,7 @@ int vShoot(t_Board *Enemy)
    case 1:
       printf("Hit\n");
       Enemy->iaBoard[iY][iX] = 5;
+      Enemy->iTotalHits--;
       if (checkSunkShip(Enemy->fleet, iIndexOfShip) == 1) {
          printf("Ship Sunk!\n");
          vSetShipToSunk(Enemy, iIndexOfShip);
@@ -552,17 +556,18 @@ void vSetShipToSunk(t_Board* Enemy, int iShipIndex)
     }
 }
 
-void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
+void vDebugSetShip(t_Board* Player)
 {
    int y = 0;
    int x = 0;
    for (int i = 0; i < 3; i++) 
    {
-      for (int j = 0; j < fleet[i].iLength; j++) {
-         fleet[i].coordinates[j].iColumn = x;
-         fleet[i].coordinates[j].iRow = y;
-         fleet[i].coordinates[j].iIsHit = 0;
-         iaBoard[y][x] = fleet[i].iLength;
+      for (int j = 0; j < Player->fleet[i].iLength; j++) {
+          Player->fleet[i].coordinates[j].iColumn = x;
+          Player->fleet[i].coordinates[j].iRow = y;
+          Player->fleet[i].coordinates[j].iIsHit = 0;
+          Player->iaBoard[y][x] = Player->fleet[i].iLength;
+          Player->iTotalHits++;
          x++;
       }
       y++;
@@ -571,11 +576,12 @@ void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
    x = 0;
    for (int i = 3; i < TOTALSHIPS; i++)
    {
-       for (int j = 0; j < fleet[i].iLength; j++) {
-           fleet[i].coordinates[j].iColumn = x;
-           fleet[i].coordinates[j].iRow = y;
-           fleet[i].coordinates[j].iIsHit = 0;
-           iaBoard[y][x] = fleet[i].iLength;
+       for (int j = 0; j < Player->fleet[i].iLength; j++) {
+           Player->fleet[i].coordinates[j].iColumn = x;
+           Player->fleet[i].coordinates[j].iRow = y;
+           Player->fleet[i].coordinates[j].iIsHit = 0;
+           Player->iaBoard[y][x] = Player->fleet[i].iLength;
+           Player->iTotalHits++;
            x++;
        }
        y++;
@@ -596,4 +602,9 @@ void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
     6 - X Versenkt
     7 - M Daneben
     8 - ? Unbekannt
+*/
+
+/*
+    Nochmal Schiessen erlauben wenn ein feld getroffen wird das bereits abgeschossen wurde und Daneben war ?
+    mögliche addition zu checkShot ?
 */
