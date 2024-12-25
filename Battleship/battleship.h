@@ -68,6 +68,7 @@ void vSwap(int* iFirst, int* iLast);
 void vSetLongShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);
 void vSetShortShip(int iaBoard[][BOARDLENGTH], t_Ship fleet[], int i);
 void vPlaceShip(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, t_Ship fleet[], int index);
+void vSetShipToSunk(t_Board* Enemy, int iShipIndex);
 void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH]);
 
 char cConvertSetup(int iCellValue);

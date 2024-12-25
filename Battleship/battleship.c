@@ -491,17 +491,65 @@ int checkShot(int iX, int iY, t_Ship fleet[], int* shipIndex)
 
 int checkSunkShip(t_Ship fleet[], int index)
 {
-   for (int i = 0; i < TOTALSHIPS; i++) 
-   {
-         if ((fleet[index].iShipId == index) && (fleet[index].iHitMarker == fleet[index].iLength)) {
-            fleet[index].iSunk = 1;
-            return fleet[index].iSunk;
+    int iSunk = 0;
+         if ((fleet[index].iShipId == index) && (fleet[index].iHitMarker == fleet[index].iLength)) 
+         {
+            iSunk = 1;
          }
-         else {
-            break;
-         }
+   
+   return iSunk;
+}
+
+int vShoot(t_Board *Enemy)
+{
+   int iIndexOfShip = 0;
+
+   printf("Please enter the coordinate that you want to shoot at\n");
+   int iX = iGetX("X Coordinate: ");
+   int iY = iGetY("Y Coordinate: ");
+
+
+
+   int iTemp = checkShot(iX, iY, Enemy->fleet, &iIndexOfShip);
+   int iGoAgain = 0;
+
+   switch (iTemp) {
+   case 0:
+      printf("Missed\n");
+      iGoAgain = 0;
+      Enemy->iaBoard[iY][iX] = 7;
+      break;
+   case 1:
+      printf("Hit\n");
+      Enemy->iaBoard[iY][iX] = 5;
+      if (checkSunkShip(Enemy->fleet, iIndexOfShip) == 1) {
+         printf("Ship Sunk!\n");
+         vSetShipToSunk(Enemy, iIndexOfShip);
+      }
+      iGoAgain = 1;
+      break;
+   case 2:
+      printf("Already Hit, go again\n");
+      iGoAgain = 1;
+      break;
+   default:
+      printf("Error, schiff wurde nicht getroffen oder verfehlt, hä?\n");    
    }
-   return 0;
+
+
+   return iGoAgain;
+}
+
+void vSetShipToSunk(t_Board* Enemy, int iShipIndex) 
+{
+    int iY = 0;
+    int iX = 0;
+    for (int i = 0; i < Enemy->fleet[iShipIndex].iLength; i++)
+    {
+        iY = Enemy->fleet[iShipIndex].coordinates[i].iRow;
+        iX = Enemy->fleet[iShipIndex].coordinates[i].iColumn;
+        Enemy->iaBoard[iY][iX] = 6;
+    }
 }
 
 void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
@@ -535,45 +583,7 @@ void vDebugSetShip(t_Ship fleet[], int iaBoard[][BOARDLENGTH])
 }
 
 
-int vShoot(t_Board *Enemy)
-{
-   int iIndexOfShip = 0;
 
-   printf("Please enter the coordinate that you want to shoot at\n");
-   int iX = iGetX("X Coordinate: ");
-   int iY = iGetY("Y Coordinate: ");
-
-
-
-   int iTemp = checkShot(iX, iY, Enemy->fleet, &iIndexOfShip);
-   int iGoAgain = 0;
-
-   switch (iTemp) {
-   case 0:
-      printf("Missed\n");
-      iGoAgain = 0;
-      Enemy->iaBoard[iY][iX] = 7;
-      break;
-   case 1:
-      printf("Hit\n");
-      Enemy->iaBoard[iY][iX] = 5;
-      if (checkSunkShip(Enemy->fleet, iIndexOfShip) == 1) {
-         printf("Ship Sunk!\n");
-         Enemy->iaBoard[iY][iX] = 6;
-      }
-      iGoAgain = 1;
-      break;
-   case 2:
-      printf("Already Hit, go again\n");
-      iGoAgain = 1;
-      break;
-   default:
-      printf("Error, schiff wurde nicht getroffen oder verfehlt, hä?\n");    
-   }
-
-
-   return iGoAgain;
-}
 
 /*
     Symbol Lexikon:
