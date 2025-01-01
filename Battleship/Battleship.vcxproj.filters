@@ -21,6 +21,12 @@
     <ClCompile Include="battleship.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="battleshipPrints.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battleshipUtils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="battleship.h">

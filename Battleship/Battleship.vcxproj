@@ -128,6 +128,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="battleship.c" />
+    <ClCompile Include="battleshipPrints.c" />
+    <ClCompile Include="battleshipUtils.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>

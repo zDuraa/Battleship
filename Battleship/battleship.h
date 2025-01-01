@@ -1,13 +1,12 @@
 #pragma once
 /* Inhalt der Headerdatei battleship.h */
+//Lib and packages includes
 #include "stdint.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <conio.h>
-//Lib and packages includes
-
 
 //-------------------------------------------------------------------
 // defines                                                                   
@@ -25,7 +24,7 @@ typedef struct coordinate {
 } Coordinate;
 
 typedef struct sShip {
-    int iLength;                           // Länge des Schiffes
+    int iLength;                           
     int iSunk;
     Coordinate coordinates[MAX_SHIP_SIZE];
     int iHitMarker;
@@ -38,8 +37,6 @@ typedef struct sBoard {
     t_Ship fleet[TOTALSHIPS];
     int iTotalHits;
 } t_Board;
-
-
 
 typedef struct cell {
 	char       symbol;
@@ -62,13 +59,14 @@ void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]);
 void vFillFleet(t_Ship fleet[]);
 void vSetFleet(t_Board* Player);
 void vIntroduction(void);
-void systemMessage(char *message);
+void vSystemMessage(char *message);
 void vSetLongShip(t_Board *Player, int index);
 void vSetShortShip(t_Board *Player, int index);
 void vSwap(int* iFirst, int *iLast);
 void vPlaceShip(t_Board *Player, int iXfirst, int iYfirst, int iXlast, int iYlast, int index);
 void vSetShipToSunk(t_Board *Enemy, int iShipIndex);
 void vDebugSetShip(t_Board *Player);
+void vPrintVictoryScreen(int iWinCondition);
 
 char cConvertSetup(int iCellValue);
 char cConvertSetupEnemy(int iCellValue);
@@ -77,7 +75,7 @@ int iGetX(char* message);
 int iGetY(char* message);
 int iCheckShipSize(int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
 int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize);
-int checkSunkShip(t_Ship fleet[], int iIndexOfShip);
-int checkShot(int iX, int iY, t_Ship fleet[], int *shipIndex);
-int vShoot(t_Board *Enemy);
+int iCheckSunkShip(t_Ship fleet[], int iIndexOfShip);
+int iCheckShot(int iX, int iY, t_Ship fleet[], int *shipIndex);
+int iShoot(t_Board *Enemy);
 

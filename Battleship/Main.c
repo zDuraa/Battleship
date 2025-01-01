@@ -1,8 +1,9 @@
 #include "battleship.h"
 
+void vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlayer, int* iWinCondition, int iWinValue);
 int main() {
     vIntroduction();
-    systemMessage("                            Hit <ENTER> to continue!\n");
+    vSystemMessage("                            Hit <ENTER> to continue!\n");
     system("cls");
 
     
@@ -27,47 +28,64 @@ int main() {
 
     vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
     printf("Total Hit Points Player A: %d\n", PlayerA.iTotalHits);
-    printf("Total Hit Points Player B: %d\n", PlayerB.iTotalHits);
-    
+    printf("Total Hit Points Player B: %d\n", PlayerB.iTotalHits);  
+    system("cls");
     //------------ Test Bereich -----------
     
     int iWinCondition = 0;
 
-    do 
-    {
-       int iTreffer = 1;
-       //Player A;
-       printf("Spieler A turn\n");
-       
-       while ((iTreffer == 1) && (iWinCondition == 0)) 
-       {
-           vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
-           //vPrintPlayBoards(PlayerA.iaBoard, PlayerB.iaBoard);
-          iTreffer = vShoot(&PlayerB);
-          
-          if (PlayerB.iTotalHits == 0)
-          {
-              iWinCondition = 1;
-          }
-       }
-       //Transition Screen needed
-       iTreffer = 1;
-       //Player B;
-       printf("Spieler B turn\n");
+    //do 
+    //{
+    //   int iTreffer = 1;
+    //   //Player A;
+    //   printf("Spieler A turn\n");
+    //   
+    //   while ((iTreffer == 1) && (iWinCondition == 0)) 
+    //   {
+    //       vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
+    //       //vPrintPlayBoards(PlayerA.iaBoard, PlayerB.iaBoard);
+    //      iTreffer = iShoot(&PlayerB);
+    //      
+    //      if (PlayerB.iTotalHits == 0)
+    //      {
+    //          iWinCondition = 1;
+    //          break;
+    //      }
+    //   }
+    //   //Transition Screen needed
+    //   printf("                         Missed Shot, Opponent's turn\n");
+    //   vSystemMessage("                            Hit <ENTER> to continue!\n");
+    //   system("cls"); //Transition
 
-       while ((iTreffer == 1) && (iWinCondition == 0))
-       {
-           vPrintPlayBoards(PlayerA.iaBoard, PlayerB.iaBoard);
-           //vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
-           iTreffer = vShoot(&PlayerA);
-           
-           if (PlayerA.iTotalHits == 0)
-           {
-               iWinCondition = 2;
-           }
-       }
-       printf("Reached End\n");
-    } while (iWinCondition == 0);    
+
+    //   iTreffer = 1;
+    //   //Player B;
+    //   printf("Spieler B turn\n");
+
+    //   while ((iTreffer == 1) && (iWinCondition == 0))
+    //   {
+    //       vPrintPlayBoards(PlayerA.iaBoard, PlayerB.iaBoard);
+    //       //vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
+    //       iTreffer = iShoot(&PlayerA);
+    //       
+    //       if (PlayerA.iTotalHits == 0)
+    //       {
+    //           iWinCondition = 2;
+    //       }
+    //   }
+    //   //Transition Screen needed
+    //   printf("                         Missed Shot, Opponent's turn\n");
+    //   vSystemMessage("                            Hit <ENTER> to continue!\n");
+    //   printf("Reached End\n");
+    //} while (iWinCondition == 0);    
+
+    do
+    {
+        vPlayerTurn("Spieler A", &PlayerA, &PlayerB, iWinCondition, 1);
+        if (!iWinCondition) {
+            vPlayerTurn("Spieler B", &PlayerB, &PlayerA, iWinCondition, 2);
+        }
+    } while (iWinCondition == 0);
 
     if (iWinCondition == 1)
     {
@@ -76,23 +94,29 @@ int main() {
     else {
         printf("Player B Wins\n");
     }
-    
+
     // Victory Screen ?
-
-
+    vPrintVictoryScreen(iWinCondition);
     return 0;
 }
 
-/*
+void vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlayer, int* iWinCondition, int iWinValue) {
+    int iTreffer = 1;
+    printf("%s turn\n", playerName);
 
-   - 2 Arrays, Player1/2
-   - char vConvertNumberToSymbol(int iCellValue)
-   - struct Board
-     {
-      int iaBoard[][] //Board des Spielers
-      int iPlayer; //Entscheiden um welchen Player es sich handelt
-     }
-   - Globale Variable, die zwischen Spieler 1 und 2 wechselt
-   - Neue Art des eingebens, Koordinate 1 eingeben (anfang), koordinate 2 eingeben (Ende) und automatisch füllen
+    while ((iTreffer == 1) && (iWinCondition == 0))
+    {
+        vPrintPlayBoards(currentPlayer->iaBoard, opponentPlayer->iaBoard);
+        iTreffer = iShoot(currentPlayer);
 
-*/
+        if (currentPlayer->iTotalHits == 0)
+        {
+            *iWinCondition = iWinValue;
+            return;
+        }
+    }
+    //Transition Screen needed
+    printf("                         Missed Shot, Opponent's turn\n");
+    vSystemMessage("                            Hit <ENTER> to continue!\n");
+    system("cls"); //Transition
+}
