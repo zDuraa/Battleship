@@ -1,7 +1,8 @@
 #include "battleship.h"
 
 void vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlayer, int* iWinCondition, int iWinValue);
-void vPlayerSetsTheirShips();
+void vPlayerSetsTheirFleet(t_Board* PlayerA, t_Board* PlayerB);
+void vDebugPlacingFleet(t_Board* PlayerA, t_Board* PlayerB);
 int main() {
     vIntroduction();
     vSystemMessage("                            Hit <ENTER> to continue!\n");
@@ -14,14 +15,11 @@ int main() {
     vFillFleet(PlayerB.fleet);
    
 
-    vPrintBoard(PlayerA.iaBoard);
-    //vSetFleet(&PlayerA);
-    vPrintBoard(PlayerA.iaBoard);
+    vPlayerSetsTheirFleet(&PlayerA, &PlayerB);
+    //vDebugPlacingFleet(&PlayerA, &PlayerB);
+
 
     //------------ Test Bereich -----------
-    vDebugSetShip(&PlayerB);
-    vDebugSetShip(&PlayerA);
-
     system("cls");
     vPrintPlayBoards(PlayerA.iaBoard,PlayerB.iaBoard);
 
@@ -122,7 +120,25 @@ void vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlay
     system("cls"); //Transition
 }
 
-void vPlayerSetsTheirShips() {
-    //vSetFleet(&PlayerA);
-    //vSetFleet(&PlayerB);
+void vPlayerSetsTheirFleet(t_Board* PlayerA, t_Board* PlayerB) {
+    vPrintBoard(PlayerA->iaBoard);
+    vSetFleet(PlayerA);
+    vPrintBoard(PlayerA->iaBoard);
+
+    printf("All Ships have been placed!\n");
+    printf("Switching to Player B!\n");
+    vSystemMessage("                            Hit <ENTER> to continue!\n");
+
+    vPrintBoard(PlayerB->iaBoard);
+    vSetFleet(PlayerB);
+    vPrintBoard(PlayerB->iaBoard);
+
+    printf("All Ships have been placed!\n");
+    printf("Starting Game!\n");
+    vSystemMessage("                            Hit <ENTER> to continue!\n");
+}
+
+void vDebugPlacingFleet(t_Board* PlayerA, t_Board* PlayerB) {
+    vDebugSetShip(PlayerB);
+    vDebugSetShip(PlayerA);
 }
