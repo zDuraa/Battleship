@@ -1,6 +1,7 @@
 #include "battleship.h"
 
 void vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlayer, int* iWinCondition, int iWinValue);
+void vPlayerSetsTheirShips();
 int main() {
     vIntroduction();
     vSystemMessage("                            Hit <ENTER> to continue!\n");
@@ -107,7 +108,7 @@ void vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlay
     while ((iTreffer == 1) && (iWinCondition == 0))
     {
         vPrintPlayBoards(currentPlayer->iaBoard, opponentPlayer->iaBoard);
-        iTreffer = iShoot(currentPlayer);
+        iTreffer = iShoot(opponentPlayer);
 
         if (currentPlayer->iTotalHits == 0)
         {
@@ -119,4 +120,9 @@ void vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlay
     printf("                         Missed Shot, Opponent's turn\n");
     vSystemMessage("                            Hit <ENTER> to continue!\n");
     system("cls"); //Transition
+}
+
+void vPlayerSetsTheirShips() {
+    //vSetFleet(&PlayerA);
+    //vSetFleet(&PlayerB);
 }
