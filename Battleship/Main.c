@@ -1,91 +1,44 @@
 #include "battleship.h"
 
-void vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlayer, int* iWinCondition, int iWinValue);
+int vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlayer, int iWinValue);
 void vPlayerSetsTheirFleet(t_Board* PlayerA, t_Board* PlayerB);
 void vDebugPlacingFleet(t_Board* PlayerA, t_Board* PlayerB);
+
 int main() {
+    //-------------------------------------------------------------------
+    // Welcome Screen                                                                  
+    //-------------------------------------------------------------------
     vIntroduction();
     vSystemMessage("                            Hit <ENTER> to continue!\n");
     system("cls");
 
-    
+    //-------------------------------------------------------------------
+    // Spiel Setup                                                                 
+    //-------------------------------------------------------------------
     t_Board PlayerA = vCreateBoard(0);
     vFillFleet(PlayerA.fleet);
     t_Board PlayerB = vCreateBoard(1);
     vFillFleet(PlayerB.fleet);
    
 
-    vPlayerSetsTheirFleet(&PlayerA, &PlayerB);
-    //vDebugPlacingFleet(&PlayerA, &PlayerB);
-
-
-    //------------ Test Bereich -----------
-    system("cls");
-    vPrintPlayBoards(PlayerA.iaBoard,PlayerB.iaBoard);
-
-    printf("\n/////////////////////////\n\n");
-
-    vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
-    printf("Total Hit Points Player A: %d\n", PlayerA.iTotalHits);
-    printf("Total Hit Points Player B: %d\n", PlayerB.iTotalHits);  
-    system("cls");
-    //------------ Test Bereich -----------
+    //vPlayerSetsTheirFleet(&PlayerA, &PlayerB);
+    vDebugPlacingFleet(&PlayerA, &PlayerB);
     
     int iWinCondition = 0;
-
-    //do 
-    //{
-    //   int iTreffer = 1;
-    //   //Player A;
-    //   printf("Spieler A turn\n");
-    //   
-    //   while ((iTreffer == 1) && (iWinCondition == 0)) 
-    //   {
-    //       vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
-    //       //vPrintPlayBoards(PlayerA.iaBoard, PlayerB.iaBoard);
-    //      iTreffer = iShoot(&PlayerB);
-    //      
-    //      if (PlayerB.iTotalHits == 0)
-    //      {
-    //          iWinCondition = 1;
-    //          break;
-    //      }
-    //   }
-    //   //Transition Screen needed
-    //   printf("                         Missed Shot, Opponent's turn\n");
-    //   vSystemMessage("                            Hit <ENTER> to continue!\n");
-    //   system("cls"); //Transition
-
-
-    //   iTreffer = 1;
-    //   //Player B;
-    //   printf("Spieler B turn\n");
-
-    //   while ((iTreffer == 1) && (iWinCondition == 0))
-    //   {
-    //       vPrintPlayBoards(PlayerA.iaBoard, PlayerB.iaBoard);
-    //       //vPrintPlayBoards(PlayerB.iaBoard, PlayerA.iaBoard);
-    //       iTreffer = iShoot(&PlayerA);
-    //       
-    //       if (PlayerA.iTotalHits == 0)
-    //       {
-    //           iWinCondition = 2;
-    //       }
-    //   }
-    //   //Transition Screen needed
-    //   printf("                         Missed Shot, Opponent's turn\n");
-    //   vSystemMessage("                            Hit <ENTER> to continue!\n");
-    //   printf("Reached End\n");
-    //} while (iWinCondition == 0);    
-
+    //-------------------------------------------------------------------
+    // Spiel Start                                                               
+    //-------------------------------------------------------------------
     do
     {
-        vPlayerTurn("Spieler A", &PlayerA, &PlayerB, iWinCondition, 1);
-        if (!iWinCondition) {
-            vPlayerTurn("Spieler B", &PlayerB, &PlayerA, iWinCondition, 2);
+        iWinCondition = vPlayerTurn("Spieler A", &PlayerA, &PlayerB, 1);
+        if (iWinCondition == 0) {
+            iWinCondition = vPlayerTurn("Spieler B", &PlayerB, &PlayerA, 2);
         }
     } while (iWinCondition == 0);
 
+    //-------------------------------------------------------------------
+    // Spiel Ende                                                                 
+    //-------------------------------------------------------------------
     if (iWinCondition == 1)
     {
         printf("Player A Wins\n");
@@ -94,30 +47,37 @@ int main() {
         printf("Player B Wins\n");
     }
 
-    // Victory Screen ?
     vPrintVictoryScreen(iWinCondition);
     return 0;
 }
 
-void vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlayer, int* iWinCondition, int iWinValue) {
+int vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlayer, int iWinValue) {
     int iTreffer = 1;
+    int iRet = 0;
     printf("%s turn\n", playerName);
 
-    while ((iTreffer == 1) && (iWinCondition == 0))
+    while ((iTreffer == 1) && (iRet == 0))
     {
         vPrintPlayBoards(currentPlayer->iaBoard, opponentPlayer->iaBoard);
         iTreffer = iShoot(opponentPlayer);
-
-        if (currentPlayer->iTotalHits == 0)
+        printf("Total Hits of Opponent : %i\n", opponentPlayer->iTotalHits);
+        if (opponentPlayer->iTotalHits == 0)
         {
-            *iWinCondition = iWinValue;
-            return;
+            iRet = iWinValue;
+            
         }
     }
-    //Transition Screen needed
-    printf("                         Missed Shot, Opponent's turn\n");
+    
+    if ((iTreffer == 0) && (iRet == 0)) {
+        printf("                         Missed Shot, Opponent's turn\n");
+    }
+    else {
+            printf("                            Final Ship sunk!\n");
+            printf("                            Game ends!");
+    }
     vSystemMessage("                            Hit <ENTER> to continue!\n");
-    system("cls"); //Transition
+    system("cls");
+    return iRet;
 }
 
 void vPlayerSetsTheirFleet(t_Board* PlayerA, t_Board* PlayerB) {
