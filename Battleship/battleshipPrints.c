@@ -45,7 +45,7 @@ void vPrintBoard(int iaBoard[][BOARDLENGTH]) {
 
 void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]) {
     char caLetters[BOARDLENGTH] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
-    printf("[My Board]\t\t\t\t[Opponent Board]\n\n");
+    printf("[Current Player]\t\t\t\t[Opponent]\n\n");
     // Kopfzeile (Zahlen von 0 bis 9)
     for (int j = 0; j < 2; j++) {
         printf("  ");
@@ -61,7 +61,7 @@ void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]) {
     for (int iX = 0; iX < BOARDLENGTH; iX++) {
         printf("%c ", caLetters[iX]);
         for (int iY = 0; iY < BOARDLENGTH; iY++) {
-            printf("%c ", cConvertSetup(iaBoard[iX][iY]));
+            printf("%c ", cConvertSetupEnemy(iaBoard[iX][iY]));
         }
         printf("\t\t\t");
         printf("%c ", caLetters[iX]);

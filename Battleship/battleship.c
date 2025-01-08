@@ -204,6 +204,7 @@ int iShoot(t_Board *Enemy)
       Enemy->iaBoard[iY][iX] = 7;
       break;
    case 1:
+      system("cls");
       printf("Hit\n");
       Enemy->iaBoard[iY][iX] = 5;
       Enemy->iTotalHits--;
@@ -214,6 +215,7 @@ int iShoot(t_Board *Enemy)
       iGoAgain = 1;
       break;
    case 2:
+      system("cls");
       printf("Already Hit, go again\n");
       iGoAgain = 1;
       break;

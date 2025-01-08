@@ -21,8 +21,8 @@ int main() {
     vFillFleet(PlayerB.fleet);
    
 
-    //vPlayerSetsTheirFleet(&PlayerA, &PlayerB);
-    vDebugPlacingFleet(&PlayerA, &PlayerB);
+    vPlayerSetsTheirFleet(&PlayerA, &PlayerB);
+    //vDebugPlacingFleet(&PlayerA, &PlayerB);
     
     int iWinCondition = 0;
     //-------------------------------------------------------------------
@@ -54,13 +54,12 @@ int main() {
 int vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlayer, int iWinValue) {
     int iTreffer = 1;
     int iRet = 0;
-    printf("%s turn\n", playerName);
+    printf("[ Current Player: %s ]\n", playerName);
 
     while ((iTreffer == 1) && (iRet == 0))
     {
         vPrintPlayBoards(currentPlayer->iaBoard, opponentPlayer->iaBoard);
         iTreffer = iShoot(opponentPlayer);
-        printf("Total Hits of Opponent : %i\n", opponentPlayer->iTotalHits);
         if (opponentPlayer->iTotalHits == 0)
         {
             iRet = iWinValue;
@@ -73,7 +72,7 @@ int vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlaye
     }
     else {
             printf("                            Final Ship sunk!\n");
-            printf("                            Game ends!");
+            printf("                            Game ends!\n");
     }
     vSystemMessage("                            Hit <ENTER> to continue!\n");
     system("cls");
@@ -83,19 +82,24 @@ int vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlaye
 void vPlayerSetsTheirFleet(t_Board* PlayerA, t_Board* PlayerB) {
     vPrintBoard(PlayerA->iaBoard);
     vSetFleet(PlayerA);
+    system("cls");
     vPrintBoard(PlayerA->iaBoard);
 
     printf("All Ships have been placed!\n");
     printf("Switching to Player B!\n");
     vSystemMessage("                            Hit <ENTER> to continue!\n");
 
+    system("cls");
     vPrintBoard(PlayerB->iaBoard);
     vSetFleet(PlayerB);
+    system("cls");
     vPrintBoard(PlayerB->iaBoard);
 
     printf("All Ships have been placed!\n");
     printf("Starting Game!\n");
     vSystemMessage("                            Hit <ENTER> to continue!\n");
+    system("cls");
+
 }
 
 void vDebugPlacingFleet(t_Board* PlayerA, t_Board* PlayerB) {
