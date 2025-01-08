@@ -1,11 +1,20 @@
 #include "battleship.h"
-
+/// <summary>
+/// Swaps int Values
+/// </summary>
+/// <param name="iFirst">Value 1</param>
+/// <param name="iLast">Value 2</param>
 void vSwap(int* iFirst, int* iLast) {
 	int temp = *iFirst;
 	*iFirst = *iLast;
 	*iLast = temp;
 }
 
+/// <summary>
+/// Convert an Intager Value into a Symbol
+/// </summary>
+/// <param name="iCellValue">The Value</param>
+/// <returns></returns>
 char cConvertSetup(int iCellValue) {
     switch (iCellValue)
     {
@@ -35,6 +44,11 @@ char cConvertSetup(int iCellValue) {
     }
 }
 
+/// <summary>
+/// Convert an Intager Value into a Symbol
+/// </summary>
+/// <param name="iCellValue">The Value</param>
+/// <returns></returns>
 char cConvertSetupEnemy(int iCellValue) {
     switch (iCellValue)
     {
@@ -52,6 +66,11 @@ char cConvertSetupEnemy(int iCellValue) {
     }
 }
 
+/// <summary>
+/// Converts a Char into an Intager
+/// </summary>
+/// <param name="message">The Char</param>
+/// <returns></returns>
 int iGetX(char* message)
 {
     char ch = '\0';
@@ -102,6 +121,11 @@ int iGetX(char* message)
     return iX;
 }
 
+/// <summary>
+/// Converts a Char into an Intager
+/// </summary>
+/// <param name="message">The Char</param>
+/// <returns></returns>
 int iGetY(char* message)
 {
     char ch = '\0';
@@ -172,11 +196,30 @@ int iGetY(char* message)
     return iY;
 }
 
+/// <summary>
+/// Checks if the Input (coordinated whe the ship should be placed) is a equal to the Size of a Ship
+/// </summary>
+/// <param name="iXfirst">The first coordinate</param>
+/// <param name="iYfirst">The first coordinate</param>
+/// <param name="iXlast">The last coordinate</param>
+/// <param name="iYlast">The last coordinate</param>
+/// <param name="iShipSize">The Ship Size</param>
+/// <returns></returns>
 int iCheckShipSize(int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize) {
     return (iYfirst == iYlast && iXlast - iXfirst + 1 == iShipSize) ||
         (iXfirst == iXlast && iYlast - iYfirst + 1 == iShipSize);
 }
 
+/// <summary>
+/// Checks if the cell is empty where i want the ship to be placed
+/// </summary>
+/// <param name="iaBoard">The board</param>
+/// <param name="iXfirst">The first coordinate</param>
+/// <param name="iYfirst">The first coordinate</param>
+/// <param name="iXlast">The last coordinate</param>
+/// <param name="iYlast">The last coordinate</param>
+/// <param name="iShipSize">The Size of the ship</param>
+/// <returns></returns>
 int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iXlast, int iYlast, int iShipSize) {
     int x = 0;
     int y = 0;
@@ -203,6 +246,14 @@ int iCheckFreeSpace(int iaBoard[][BOARDLENGTH], int iXfirst, int iYfirst, int iX
     return 1; // Platz ist frei
 }
 
+/// <summary>
+/// Checks what happens after i shoot a cell
+/// </summary>
+/// <param name="iX">X coordinate</param>
+/// <param name="iY">Y coordinate</param>
+/// <param name="fleet">the ships</param>
+/// <param name="shipIndex">the index of the fleet</param>
+/// <returns></returns>
 int iCheckShot(int iX, int iY, t_Ship fleet[], int* shipIndex)
 {
     int ret = 0;
@@ -228,6 +279,12 @@ int iCheckShot(int iX, int iY, t_Ship fleet[], int* shipIndex)
     return ret; // Kein Treffer / Miss
 }
 
+/// <summary>
+/// Checks if a Ship is sunk or not by its hitmarker
+/// </summary>
+/// <param name="fleet">the ship array</param>
+/// <param name="index">the index of the array</param>
+/// <returns></returns>
 int iCheckSunkShip(t_Ship fleet[], int index)
 {
     int iSunk = 0;

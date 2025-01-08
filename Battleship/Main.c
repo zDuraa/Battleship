@@ -51,6 +51,14 @@ int main() {
     return 0;
 }
 
+/// <summary>
+/// Handles what happens at each player turn
+/// </summary>
+/// <param name="playerName">The current Players name</param>
+/// <param name="currentPlayer">the current Player</param>
+/// <param name="opponentPlayer">the current Opponent</param>
+/// <param name="iWinValue">The Value that will be assigned, if a player meets the conditions for a win</param>
+/// <returns></returns>
 int vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlayer, int iWinValue) {
     int iTreffer = 1;
     int iRet = 0;
@@ -79,6 +87,11 @@ int vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlaye
     return iRet;
 }
 
+/// <summary>
+/// Handles the placing of the Ships
+/// </summary>
+/// <param name="PlayerA">Player A</param>
+/// <param name="PlayerB">Player B</param>
 void vPlayerSetsTheirFleet(t_Board* PlayerA, t_Board* PlayerB) {
     vPrintBoard(PlayerA->iaBoard);
     vSetFleet(PlayerA);
@@ -102,6 +115,11 @@ void vPlayerSetsTheirFleet(t_Board* PlayerA, t_Board* PlayerB) {
 
 }
 
+/// <summary>
+/// Automatically Places Ships on the field
+/// </summary>
+/// <param name="PlayerA">Player A</param>
+/// <param name="PlayerB">Player B</param>
 void vDebugPlacingFleet(t_Board* PlayerA, t_Board* PlayerB) {
     vDebugSetShip(PlayerB);
     vDebugSetShip(PlayerA);

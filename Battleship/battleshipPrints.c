@@ -1,5 +1,7 @@
 #include "battleship.h"
-
+/// <summary>
+/// Prints the welcome Screen and introduces the Game to the player
+/// </summary>
 void vIntroduction()
 {
 	printf("=======================================================\n");
@@ -23,17 +25,18 @@ void vIntroduction()
 	printf("7. First player to destroy all ships wins\n\n");
 }
 
+/// <summary>
+/// Prints the board with Ships/Water visible.
+/// </summary>
+/// <param name="iaBoard"> The Board that should be printed </param>
 void vPrintBoard(int iaBoard[][BOARDLENGTH]) {
     char caLetters[BOARDLENGTH] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
-
-    // Kopfzeile (Zahlen von 0 bis 9)
     printf("  ");
     for (int i = 0; i < BOARDLENGTH; i++) {
         printf("%d ", i);
     }
     printf("\n");
 
-    // Board-Zeilen mit Buchstaben und Werten
     for (int iX = 0; iX < BOARDLENGTH; iX++) {
         printf("%c ", caLetters[iX]);
         for (int iY = 0; iY < BOARDLENGTH; iY++) {
@@ -43,10 +46,14 @@ void vPrintBoard(int iaBoard[][BOARDLENGTH]) {
     }
 }
 
+/// <summary>
+/// Prints the Board of each Player, hidden so only questionsmarks are shown
+/// </summary>
+/// <param name="iaBoard">Board of Player A which will be printed</param>
+/// <param name="ibBoard">Board of Player B which will be printed</param>
 void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]) {
     char caLetters[BOARDLENGTH] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
     printf("[Current Player]\t\t\t\t[Opponent]\n\n");
-    // Kopfzeile (Zahlen von 0 bis 9)
     for (int j = 0; j < 2; j++) {
         printf("  ");
         for (int i = 0; i < BOARDLENGTH; i++) {
@@ -56,8 +63,6 @@ void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]) {
     }
     printf("\n");
 
-
-    // Board-Zeilen mit Buchstaben und Werten
     for (int iX = 0; iX < BOARDLENGTH; iX++) {
         printf("%c ", caLetters[iX]);
         for (int iY = 0; iY < BOARDLENGTH; iY++) {
@@ -72,7 +77,10 @@ void vPrintPlayBoards(int iaBoard[][BOARDLENGTH], int ibBoard[][BOARDLENGTH]) {
     }
 }
 
-//Enter Message and only after pressing enter, it continous
+/// <summary>
+/// Waits for the player to press a certain button, assigns it to an variable and checks if it equals to the wished button
+/// </summary>
+/// <param name="message">The massage that will be displayed</param>
 void vSystemMessage(char* message) {
     char ch = '\0';
 
@@ -81,7 +89,10 @@ void vSystemMessage(char* message) {
     } while ((ch = _getch()) != '\r');
 }
 
-
+/// <summary>
+/// Prints the Victory Screen after the game ends
+/// </summary>
+/// <param name="iWinCondition"> Condition for checking which message to be displayed</param>
 void vPrintVictoryScreen(int iWinCondition) {
     if (iWinCondition == 1) {
         printf("\n");

@@ -1,6 +1,10 @@
 #include "battleship.h"
 
-
+/// <summary>
+/// Creates the board for a Player by filling up the array and applying an ID 
+/// </summary>
+/// <param name="iPlayerId">The ID which will be assigned to a board</param>
+/// <returns></returns>
 t_Board vCreateBoard(int iPlayerId) {
    t_Board PlayerBoard;
 
@@ -17,7 +21,10 @@ t_Board vCreateBoard(int iPlayerId) {
    return PlayerBoard;
 }
 
-//Puts Ship on Board
+/// <summary>
+/// Handles the placing of each ship
+/// </summary>
+/// <param name="Player">The Player which ships will be placed</param>
 void vSetFleet(t_Board *Player)
 {
    printf("Enter coordinates to place a ship on the board\n");
@@ -40,6 +47,11 @@ void vSetFleet(t_Board *Player)
    }
 }
 
+/// <summary>
+/// Handles the placing of Ships by the size >1 and checks for a legal input
+/// </summary>
+/// <param name="Player">The Player which ships will be placed</param>
+/// <param name="index">Index of the Fleet Array</param>
 void vSetLongShip(t_Board *Player, int index) {
    int iXfirst, iYfirst, iXlast, iYlast, iErr;
 
@@ -89,6 +101,11 @@ void vSetLongShip(t_Board *Player, int index) {
    } while (iErr == -1);
 }
 
+/// <summary>
+/// Handles the placing of Ships by the Size of 1
+/// </summary>
+/// <param name="Player">The Player which ships will be placed</param>
+/// <param name="index">Index of the Fleet Array</param>
 void vSetShortShip(t_Board *Player, int index)
 {
    int iX = 0;
@@ -126,6 +143,10 @@ void vSetShortShip(t_Board *Player, int index)
 
 }
 
+/// <summary>
+/// Handles the Size of each ship, the hitmarker and the id
+/// </summary>
+/// <param name="fleet">Fleet with all Ships in it</param>
 void vFillFleet(t_Ship fleet[]) {
    int index = 0;
 
@@ -161,6 +182,15 @@ void vFillFleet(t_Ship fleet[]) {
    }
 }
 
+/// <summary>
+/// Places the Ship into the Field
+/// </summary>
+/// <param name="Player">The Player of the ships/board</param>
+/// <param name="iXfirst">First X coordinate</param>
+/// <param name="iYfirst">First Y coordinate</param>
+/// <param name="iXlast">First X coordinate</param>
+/// <param name="iYlast">First Y coordinate</param>
+/// <param name="index"> Index of the Fleet Array</param>
 void vPlaceShip(t_Board *Player, int iXfirst, int iYfirst, int iXlast, int iYlast, int index) {
    int x = 0;
    int y = 0;
@@ -184,6 +214,11 @@ void vPlaceShip(t_Board *Player, int iXfirst, int iYfirst, int iXlast, int iYlas
    }
 }
 
+/// <summary>
+/// Handles the shooting, if it hits/misses or already shot at ship
+/// </summary>
+/// <param name="Enemy">The Opponent</param>
+/// <returns></returns>
 int iShoot(t_Board *Enemy)
 {
    int iIndexOfShip = 0;
@@ -227,6 +262,11 @@ int iShoot(t_Board *Enemy)
    return iGoAgain;
 }
 
+/// <summary>
+/// Marks a Ship as Sunk
+/// </summary>
+/// <param name="Enemy">The Opponent</param>
+/// <param name="iShipIndex">The Ship beeing marked as sunk</param>
 void vSetShipToSunk(t_Board* Enemy, int iShipIndex) 
 {
     int iY = 0;
@@ -239,6 +279,11 @@ void vSetShipToSunk(t_Board* Enemy, int iShipIndex)
     }
 }
 
+
+/// <summary>
+///  Automatically Places Ships
+/// </summary>
+/// <param name="Player">The Player which ships are beeing placed</param>
 void vDebugSetShip(t_Board* Player)
 {
    int y = 0;
@@ -282,9 +327,4 @@ void vDebugSetShip(t_Board* Player)
     6 - X Versenkt
     7 - M Daneben
     8 - ? Unbekannt
-*/
-
-/*
-    Nochmal Schiessen erlauben wenn ein feld getroffen wird das bereits abgeschossen wurde und Daneben war ?
-    mögliche addition zu checkShot ?
 */
