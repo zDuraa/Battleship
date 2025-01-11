@@ -75,7 +75,7 @@ int vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlaye
         }
     }
     
-    //Derp print für keinen Treffer (iTreffer == 0) && (iRet == 0) und für die WinCodition (iTreffer == 1) && (iRet == 1)
+    //Der print für keinen Treffer (iTreffer == 0) && (iRet == 0) und für die WinCondition (iTreffer == 1) && (iRet == 1)
     if ((iTreffer == 0) && (iRet == 0)) {
         printf("                         Missed Shot, Opponent's turn\n");
     }
