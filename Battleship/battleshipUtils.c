@@ -197,7 +197,7 @@ int iGetY(char* message)
 }
 
 /// <summary>
-/// Checks if the Input (coordinated whe the ship should be placed) is a equal to the Size of a Ship
+/// Checks if the Input (coordinate where the ship should be placed) is a equal to the Size of a Ship
 /// </summary>
 /// <param name="iXfirst">The first coordinate</param>
 /// <param name="iYfirst">The first coordinate</param>

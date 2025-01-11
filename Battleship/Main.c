@@ -64,17 +64,18 @@ int vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlaye
     int iRet = 0;
     printf("[ Current Player: %s ]\n", playerName);
 
-    while ((iTreffer == 1) && (iRet == 0))
+    while ((iTreffer == 1) && (iRet == 0)) //Solange wir Schiffe treffen und unser Return keinen anderen Wert annimmt, besteht der loop
     {
         vPrintPlayBoards(currentPlayer->iaBoard, opponentPlayer->iaBoard);
-        iTreffer = iShoot(opponentPlayer);
-        if (opponentPlayer->iTotalHits == 0)
+        iTreffer = iShoot(opponentPlayer); //Wir Überprüfen ob wir weiterhin treffen
+        if (opponentPlayer->iTotalHits == 0) //Sollten wir im Verlauf des Spieles alle Schiffe getroffenhaben
         {
-            iRet = iWinValue;
+            iRet = iWinValue; //So wird die WinCodition übergeben und der loop beendet
             
         }
     }
     
+    //Derp print für keinen Treffer (iTreffer == 0) && (iRet == 0) und für die WinCodition (iTreffer == 1) && (iRet == 1)
     if ((iTreffer == 0) && (iRet == 0)) {
         printf("                         Missed Shot, Opponent's turn\n");
     }
@@ -93,12 +94,14 @@ int vPlayerTurn(char* playerName, t_Board* currentPlayer, t_Board* opponentPlaye
 /// <param name="PlayerA">Player A</param>
 /// <param name="PlayerB">Player B</param>
 void vPlayerSetsTheirFleet(t_Board* PlayerA, t_Board* PlayerB) {
+    //Spieler A sein Brett wird ausgegeben und darauf PLatziert er seine Schiffe
     vPrintBoard(PlayerA->iaBoard);
     vSetFleet(PlayerA);
     system("cls");
     vPrintBoard(PlayerA->iaBoard);
-
     printf("All Ships have been placed!\n");
+
+    //Dann werden alle Schiffe von Spieler B Platziert
     printf("Switching to Player B!\n");
     vSystemMessage("                            Hit <ENTER> to continue!\n");
 
@@ -107,8 +110,9 @@ void vPlayerSetsTheirFleet(t_Board* PlayerA, t_Board* PlayerB) {
     vSetFleet(PlayerB);
     system("cls");
     vPrintBoard(PlayerB->iaBoard);
-
     printf("All Ships have been placed!\n");
+
+    //Darauf wird die Setup Phase beendet
     printf("Starting Game!\n");
     vSystemMessage("                            Hit <ENTER> to continue!\n");
     system("cls");
